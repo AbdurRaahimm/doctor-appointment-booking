@@ -1,10 +1,9 @@
-const user = JSON.parse(localStorage.getItem("user")) || [];
-console.log(user.username);
 
 export const userMenus = [
     {
         id: 1,
         name: "Profile",
+        // path: "user-profile",
         icon: "bi bi-person",
     },
     {

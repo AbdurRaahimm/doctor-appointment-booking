@@ -7,7 +7,7 @@ import { userMenus } from '../data/userMenus';
 import { fetchUserById } from '../redux/userByIdSlice';
 
 export default function Sidebar() {
-    const user = JSON.parse(localStorage.getItem('user'));
+    const user = JSON.parse(localStorage.getItem('user')) || [];
     const userById = useSelector(state => state.userById.userById);
     const dispatch = useDispatch();
     useEffect(() => {

@@ -1,11 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-const user = JSON.parse(localStorage.getItem('user')) || [];
+const user = JSON.parse(localStorage.getItem('user')) || []; 
 
-
-
-export const fetchUsers  = createAsyncThunk("fetchUsers", async () => {
-    const response = await fetch("http://localhost:3000/api/user/get-users" , {
+export const fetchApprovedDoctors  = createAsyncThunk("fetchApprovedDoctors", async () => {
+    const response = await fetch("http://localhost:3000/api/doctor/get-approved-doctors" , {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -16,30 +14,30 @@ export const fetchUsers  = createAsyncThunk("fetchUsers", async () => {
         throw new Error('Server error');
     }   
     return await response.json();
-});
+}
+);
 
-
-const userSlice = createSlice({
-    name: 'user',
+export const approvedDoctorsSlice = createSlice({
+    name: 'approvedDoctors',
     initialState: {
-        user: [],
+        doctors: [],
         loading: false,
         error: false,
     },
     reducers: { },
     extraReducers: (builder) => { 
-        builder.addCase(fetchUsers.pending, (state) => {
+        builder.addCase(fetchApprovedDoctors.pending, (state) => {
             state.loading = true;
         });
-        builder.addCase(fetchUsers.fulfilled, (state, action) => {
-            state.user = action.payload;
+        builder.addCase(fetchApprovedDoctors.fulfilled, (state, action) => {
+            state.doctors = action.payload;
             state.loading = false;
         });
-        builder.addCase(fetchUsers.rejected, (state, action) => {
+        builder.addCase(fetchApprovedDoctors.rejected, (state, action) => {
             state.loading = false;
             state.error = action.error.message;
         });
     },
 });
 
-export default userSlice.reducer;
+export default approvedDoctorsSlice.reducer;

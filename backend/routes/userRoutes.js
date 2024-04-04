@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const User = require('../models/userModel');
+const Doctor = require('../models/doctorModel');
 const authVerify = require('../middleware/authVerify');
 const multer = require('multer');
 const nodemailer = require('nodemailer');
@@ -16,7 +17,6 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
-
 
 // user register
 router.post('/register', upload.single('profileImg'), async (req, res) => {
@@ -168,6 +168,62 @@ router.get('/get-user/:id', authVerify, async (req, res) => {
 );
 
 
+// doctor apply account 
+router.post('/apply-doctor', authVerify, async (req, res) => {
+    try {
+        // Check if the doctor already exists
+        const doctorExists = await Doctor.findOne({ email: req.body.email });
+        if (doctorExists) {
+            throw new Error('Doctor already exists');
+        }
+
+        // Create a new doctor
+        const newDoctor = new Doctor({ ...req.body, status: 'pending'});
+        await newDoctor.save();
+        const adminUser = await User.findOne({ isAdmin: true }); 
+
+        const unseenNotifications = adminUser.unseenNotifications;
+        unseenNotifications.push({
+            type: 'New doctor application',
+            message: `${newDoctor.name} has applied for a doctor account`,
+            data:{
+                doctorId: newDoctor._id,
+                doctorName: newDoctor.name
+            },
+            link: `/dashboard/doctor-list`
+        });
+
+        await User.findByIdAndUpdate(adminUser._id, { unseenNotifications });
+        res.status(201).json({ message: 'Doctor application submitted successfully' });
+
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+
+});
+
+// mark all notification as read by id
+router.put('/mark-all-as-read/:id', authVerify, async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        const seenNotifications = user.seenNotifications.concat(user.unseenNotifications);
+        await User.findByIdAndUpdate(req.params.id, { unseenNotifications: [], seenNotifications });
+        res.status(200).json({ message: 'All notifications marked as read' });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+// delete all notification by id 
+router.delete('/delete-all-notifications/:id', authVerify, async (req, res) => {
+    try {
+        await User.findByIdAndUpdate(req.params.id, { unseenNotifications: [], seenNotifications: [] });
+        res.status(200).json({ message: 'All notifications deleted' });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+
+});
 
 
 module.exports = router;

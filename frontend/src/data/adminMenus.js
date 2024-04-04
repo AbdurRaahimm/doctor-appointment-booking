@@ -1,22 +1,21 @@
-const user = JSON.parse(localStorage.getItem("user")) || [];
-console.log(user.username);
+
 export const adminMenus = [
     {
         id: 1,
         name: "Profile",
-        path: `${user.username}`,
+        // path: `admin-profile`,
         icon: "bi bi-house",
     },
     {
         id: 2,
         name: "Users",
-        path: "/users",
+        path: "user-list",
         icon: "bi bi-person",
     },
     {
         id: 3,
         name: "Doctors",
-        path: "/doctors",
+        path: "doctor-list",
         icon: "bi bi-person",
     },
 ]

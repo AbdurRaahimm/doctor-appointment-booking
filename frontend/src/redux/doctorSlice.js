@@ -2,10 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const user = JSON.parse(localStorage.getItem('user')) || [];
 
-
-
-export const fetchUsers  = createAsyncThunk("fetchUsers", async () => {
-    const response = await fetch("http://localhost:3000/api/user/get-users" , {
+export const fetchDoctors  = createAsyncThunk("fetchDoctors", async () => {
+    const response = await fetch("http://localhost:3000/api/admin/get-doctors" , {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -16,30 +14,30 @@ export const fetchUsers  = createAsyncThunk("fetchUsers", async () => {
         throw new Error('Server error');
     }   
     return await response.json();
-});
+}
+);
 
-
-const userSlice = createSlice({
-    name: 'user',
+export const doctorSlice = createSlice({
+    name: 'doctor',
     initialState: {
-        user: [],
+        doctors: [],
         loading: false,
         error: false,
     },
     reducers: { },
     extraReducers: (builder) => { 
-        builder.addCase(fetchUsers.pending, (state) => {
+        builder.addCase(fetchDoctors.pending, (state) => {
             state.loading = true;
         });
-        builder.addCase(fetchUsers.fulfilled, (state, action) => {
-            state.user = action.payload;
+        builder.addCase(fetchDoctors.fulfilled, (state, action) => {
+            state.doctors = action.payload;
             state.loading = false;
         });
-        builder.addCase(fetchUsers.rejected, (state, action) => {
+        builder.addCase(fetchDoctors.rejected, (state, action) => {
             state.loading = false;
             state.error = action.error.message;
         });
     },
 });
 
-export default userSlice.reducer;
+export default doctorSlice.reducer;

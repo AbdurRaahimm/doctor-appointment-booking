@@ -16,8 +16,12 @@ import Profile from "./pages/Profile";
 import PublicRoutes from "./components/PublicRoutes";
 import ApplyDoctor from "./pages/ApplyDoctor";
 import DashboardLayout from "./components/DashboardLayout";
-const user = JSON.parse(localStorage.getItem("user")) || [];
-console.log(user.username);
+import Notifications from "./pages/Notifications";
+import UsersList from "./pages/admin/UsersList";
+import DoctorsList from "./pages/admin/DoctorsList";
+import DoctorProfile from "./pages/doctor/DoctorProfile";
+
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,32 +31,22 @@ const router = createBrowserRouter(
         <Route path="contact" element={<Contact />} />
         <Route path="about" element={<About />} />
         <Route path="find-doctor" element={<FindDoctor />} />
-        <Route path="dashboard" element={<DashboardLayout />}>
-          <Route index element={ <ProtectRoutes><Profile /></ProtectRoutes> } />
-          <Route path="apply-doctor" element={<ApplyDoctor />} />
-          
+
+        <Route path="dashboard" element={<DashboardLayout />} errorElement={<ErrorPage />}>
+          <Route index  element={<ProtectRoutes> <Profile /></ProtectRoutes>} />
+          <Route path="doctor-profile"  element={<ProtectRoutes> <DoctorProfile /></ProtectRoutes>} />
+          <Route path="user-list" element={<ProtectRoutes><UsersList /></ProtectRoutes>} />
+          <Route path="doctor-list" element={<ProtectRoutes><DoctorsList /></ProtectRoutes>} />
+          <Route path="apply-doctor" element={<ProtectRoutes><ApplyDoctor /></ProtectRoutes>} />
+          <Route path="notifications" element={<ProtectRoutes><Notifications /></ProtectRoutes>} />
         </Route>
+
       </Route>
-      <Route path="signin" element={
-        <PublicRoutes>
-          <SingIn />
-        </PublicRoutes>
-      } />
-      <Route path="signup" element={
-        <PublicRoutes>
-          <SingUp />
-        </PublicRoutes>
-      } />
-      <Route path="forgot-password" element={
-        <PublicRoutes>
-          <ForgotPassword />
-        </PublicRoutes>
-      } />
-      <Route path="otpverify" element={
-        <ProtectRoutes>
-          <OTPVerify />
-        </ProtectRoutes>
-      } />
+
+      <Route path="signin" element={<PublicRoutes><SingIn /></PublicRoutes>} />
+      <Route path="signup" element={<PublicRoutes> <SingUp /> </PublicRoutes>} />
+      <Route path="forgot-password" element={<PublicRoutes> <ForgotPassword /> </PublicRoutes>} />
+      <Route path="otpverify" element={<ProtectRoutes> <OTPVerify />  </ProtectRoutes>} />
 
     </>
 

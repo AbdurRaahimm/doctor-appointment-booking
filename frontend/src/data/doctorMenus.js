@@ -1,9 +1,15 @@
 export const doctorMenus = [
     {
         id: 1,
-        name: "Home",
-        path: "/home",
-        icon: "bi bi-house",
+        name: "Profile",
+        // path: "/doctor-profile",
+        icon: "bi bi-person",
+    },
+    {
+        id: 1,
+        name: "home",
+        path: "doctor-profile",
+        icon: "bi bi-person",
     },
     {
         id: 2,
@@ -16,11 +22,5 @@ export const doctorMenus = [
         name: "Patients",
         path: "/patients",
         icon: "bi bi-person-plus",
-    },
-    {
-        id: 4,
-        name: "Profile",
-        path: "/profile",
-        icon: "bi bi-person",
     },
 ]

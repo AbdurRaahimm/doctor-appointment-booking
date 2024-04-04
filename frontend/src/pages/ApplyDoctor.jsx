@@ -1,6 +1,64 @@
 import React from 'react'
+import { toast } from 'react-toastify';
 
 export default function ApplyDoctor() {
+    const user = JSON.parse(localStorage.getItem('user')) || [];
+    const userId = user._id;
+    console.log(userId);
+    const token = user.Token;
+    const handleApplyDoctor = async (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const formData = new FormData(form);
+    
+        if (formData.get('timeFrom') === formData.get('timeTo')) {
+            toast.error('Time from and time to cannot be same');
+            return;
+        }
+        if (formData.get('timeFrom') > formData.get('timeTo')) {
+            toast.error('Time from cannot be greater than time to');
+            return;
+        }
+    
+        // formData.append('userId', userId); // Append userId to form data
+    
+        try {
+            const response = await fetch('http://localhost:3000/api/user/apply-doctor', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    userId:userId,
+                    image: user.image,
+                    name:formData.get('name'),
+                    email:formData.get('email'),
+                    phone:formData.get('phone'),
+                    address:formData.get('address'),
+                    speciality:formData.get('speciality'),
+                    degree:formData.get('degree'),
+                    experience:formData.get('experience'),
+                    hospital:formData.get('hospital'),
+                    fee:formData.get('fee'),
+                    timeFrom:formData.get('timeFrom'),
+                    timeTo:formData.get('timeTo')                  
+                }) , 
+            });
+            const data = await response.json();
+            // console.log(data);
+            if (response.ok) {
+                toast.success(data.message);
+                form.reset();
+            } else {
+                toast.error(data.message);
+            }
+        } catch (error) {
+            console.error('Server error:', error);
+            toast.error('Server error');
+        }
+    };
     return (
         <section>
             <div className="container my-3">
@@ -11,31 +69,31 @@ export default function ApplyDoctor() {
                         <hr />
                         <h3 className='text-capitalize'>Personal information</h3>
 
-                        <form action="">
+                        <form onSubmit={handleApplyDoctor} >
                             <div className="row">
                                 <div className="col-md-6">
                                     <div className="form-group">
                                         <label htmlFor="name">Name</label>
-                                        <input type="text" className="form-control" id="name" required />
+                                        <input type="text" name='name' className="form-control" id="name" required />
                                     </div>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="form-group">
                                         <label htmlFor="email">Email</label>
-                                        <input type="email" className="form-control" id="email" required />
+                                        <input type="email" name='email' className="form-control" id="email" required />
                                     </div>
                                 </div>
 
                                 <div className="col-md-6">
                                     <div className="form-group">
                                         <label htmlFor="phone">Phone</label>
-                                        <input type="text" className="form-control" id="phone" required />
+                                        <input type="text" name="phone" className="form-control" id="phone" required />
                                     </div>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="form-group">
                                         <label htmlFor="address">Address</label>
-                                        <input type="text" className="form-control" id="address" required />
+                                        <input type="text" name="address" className="form-control" id="address" required />
                                     </div>
                                 </div>
                                 <hr className='mt-4' />
@@ -95,9 +153,15 @@ export default function ApplyDoctor() {
                                     </div>
                                 </div>
                                 <div className="col-md-6">
-                                    <div className="form-group">
-                                        <label htmlFor="timings">Timings</label>
-                                        <input type="text" name="timings" className="form-control" id="timings" required />
+                                    <div className=" d-flex justify-content-between ">
+                                        <div className="form-group">
+                                            <label htmlFor="timings">Time From</label>
+                                            <input type="time" name="timeFrom" className="form-control" id="timings" required />
+                                        </div>
+                                        <div className="form-group">
+                                            <label htmlFor="timings">Time To</label>
+                                            <input type="time" name="timeTo" className="form-control" id="timings" required />
+                                        </div>
                                     </div>
                                 </div>
                             </div>

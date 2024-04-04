@@ -1,6 +1,14 @@
 const mongoose = require('mongoose');
 
 const doctorSchema = new mongoose.Schema({
+    userId:{
+        type: mongoose.Schema.Types.ObjectId,
+        required: [true, 'Please provide a user']
+    },
+    image:{
+        type: String,
+        required: [true, 'Please provide an image']
+    },
     name: {
         type: String,
         required: [true, 'Please provide a name'],
@@ -32,17 +40,29 @@ const doctorSchema = new mongoose.Schema({
         type: Number,
         required: [true, 'Please provide an experience']
     },
+    degree: {
+        type: String,
+        required: [true, 'Please provide a degree']
+    },
     fee: {
         type: Number,
         required: [true, 'Please provide a fee']
     },
-    timings: {
+    timeFrom: {
         type: String,
-        required: [true, 'Please provide timings']
+        required: [true, 'Please provide a timeFrom']
+    },
+    timeTo: {
+        type: String,
+        required: [true, 'Please provide a timeTo']
     },
     hospital: {
         type: String,
         required: [true, 'Please provide a hospital']
+    },
+    status: {
+        type: String,
+        default: "pending",
     },
     reviews: [
         {
