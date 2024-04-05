@@ -29,7 +29,7 @@ export default function SingUp() {
     setData(formData) 
     // send otp to email
     Email.send({
-      SecureToken: import.meta.env.VITE_OTP_PASS,
+      SecureToken: import.meta.env.VITE_SECURE_TOKEN,
       To: form.email.value,
       From: import.meta.env.VITE_FROM_EMAIL,
       Subject: "OTP Verification",

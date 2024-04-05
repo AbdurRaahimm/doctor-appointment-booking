@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
 export default function ApplyDoctor() {
+    const [loading, setLoading] = useState(false);
+    const userById = useSelector(state => state.userById.userById);
+    console.log(userById);
     const user = JSON.parse(localStorage.getItem('user')) || [];
     const userId = user._id;
     console.log(userId);
@@ -10,7 +14,7 @@ export default function ApplyDoctor() {
         e.preventDefault();
         const form = e.target;
         const formData = new FormData(form);
-    
+
         if (formData.get('timeFrom') === formData.get('timeTo')) {
             toast.error('Time from and time to cannot be same');
             return;
@@ -19,9 +23,9 @@ export default function ApplyDoctor() {
             toast.error('Time from cannot be greater than time to');
             return;
         }
-    
+
         // formData.append('userId', userId); // Append userId to form data
-    
+        setLoading(true);
         try {
             const response = await fetch('http://localhost:3000/api/user/apply-doctor', {
                 method: 'POST',
@@ -31,20 +35,21 @@ export default function ApplyDoctor() {
                 },
                 credentials: 'include',
                 body: JSON.stringify({
-                    userId:userId,
+                    userId: userId,
                     image: user.image,
-                    name:formData.get('name'),
-                    email:formData.get('email'),
-                    phone:formData.get('phone'),
-                    address:formData.get('address'),
-                    speciality:formData.get('speciality'),
-                    degree:formData.get('degree'),
-                    experience:formData.get('experience'),
-                    hospital:formData.get('hospital'),
-                    fee:formData.get('fee'),
-                    timeFrom:formData.get('timeFrom'),
-                    timeTo:formData.get('timeTo')                  
-                }) , 
+                    name: formData.get('name'),
+                    email: formData.get('email'),
+                    phone: formData.get('phone'),
+                    address: formData.get('address'),
+                    about: formData.get('about'),
+                    speciality: formData.get('speciality'),
+                    degree: formData.get('degree'),
+                    experience: formData.get('experience'),
+                    hospital: formData.get('hospital'),
+                    fee: formData.get('fee'),
+                    timeFrom: formData.get('timeFrom'),
+                    timeTo: formData.get('timeTo')
+                }),
             });
             const data = await response.json();
             // console.log(data);
@@ -53,6 +58,7 @@ export default function ApplyDoctor() {
                 form.reset();
             } else {
                 toast.error(data.message);
+                setLoading(false);
             }
         } catch (error) {
             console.error('Server error:', error);
@@ -74,26 +80,33 @@ export default function ApplyDoctor() {
                                 <div className="col-md-6">
                                     <div className="form-group">
                                         <label htmlFor="name">Name</label>
-                                        <input type="text" name='name' className="form-control" id="name" required />
+                                        <input type="text" name='name' defaultValue={userById.username} className="form-control" id="name" required />
                                     </div>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="form-group">
                                         <label htmlFor="email">Email</label>
-                                        <input type="email" name='email' className="form-control" id="email" required />
+                                        <input type="email" name='email' defaultValue={userById.email} className="form-control" id="email" required />
                                     </div>
                                 </div>
 
                                 <div className="col-md-6">
                                     <div className="form-group">
                                         <label htmlFor="phone">Phone</label>
-                                        <input type="text" name="phone" className="form-control" id="phone" required />
+                                        <input type="text" name="phone" defaultValue={userById.phone} className="form-control" id="phone" required />
                                     </div>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="form-group">
                                         <label htmlFor="address">Address</label>
                                         <input type="text" name="address" className="form-control" id="address" required />
+                                    </div>
+                                </div>
+                                {/* say about yourself */}
+                                <div className="col-md-12">
+                                    <div className="form-group">
+                                        <label htmlFor="about">Say about yourself</label>
+                                        <textarea name="about" className="form-control" id="about" required />
                                     </div>
                                 </div>
                                 <hr className='mt-4' />
@@ -166,11 +179,17 @@ export default function ApplyDoctor() {
                                 </div>
                             </div>
 
-                            <button type="submit" className="btn text-white w-100 mt-3" style={{ backgroundImage: 'linear-gradient(to right, #fc6076, #ff9a44)' }}>Submit</button>
-                        </form>
-                    </div>
+                            <button type="submit" className="btn text-white w-100 mt-3" style={{ backgroundImage: 'linear-gradient(to right, #fc6076, #ff9a44)' }}>
+                                {
+                                    loading ? <div className="spinner-border text-light" role="status">
+                                        <span className="visually-hidden">Loading...</span>
+                                    </div> : 'Apply'
+                                }
+                        </button>
+                    </form>
                 </div>
             </div>
-        </section>
+        </div>
+        </section >
     )
 }

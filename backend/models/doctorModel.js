@@ -56,6 +56,10 @@ const doctorSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please provide a timeTo']
     },
+    about:{
+        type: String,
+        required: [true, 'Please provide an about']
+    },
     hospital: {
         type: String,
         required: [true, 'Please provide a hospital']

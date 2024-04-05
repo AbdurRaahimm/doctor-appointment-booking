@@ -1,13 +1,12 @@
 import React from 'react'
 import BookProcess from '../components/BookProcess'
-// import Layout from '../components/Layout'
-// import Breadcum from '../components/Breadcum'
+import Breadcum from '../components/Breadcum'
 // import BookProcess from '../components/BookProcess'
 
 export default function About() {
     return (
         <>
-            {/* <Breadcum title="About Us" /> */}
+            <Breadcum title="About Us" />
             <section className="py-5">
                 <div className="container">
                     <div className="row">

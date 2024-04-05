@@ -1,21 +1,24 @@
 import React from 'react'
+import {toast} from 'react-toastify'
 
 export default function ForgotPassword() {
-    const handleForget = async (e) => {
+    const handleForgetPassword = async (e) => {
         e.preventDefault();
-        const email = e.target.email.value;
         const response = await fetch('http://localhost:3000/api/user/forgot-password', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ email })
+            body: JSON.stringify({ 
+                email: e.target.email.value
+             })
         })
         const data = await response.json();
         if (response.ok) {
-            alert(data.message)
+            toast.success(data.message);
+            e.target.reset();
         } else {
-            alert(data.message)
+            toast.error(data.message)
         }
         
     }
@@ -26,9 +29,9 @@ export default function ForgotPassword() {
                     <div className="col-lg-12 col-md-12 pb-2 text-center text-white rounded d-flex align-items-center justify-content-center flex-column " style={{ backgroundImage: 'linear-gradient(to right, #fc6076, #ff9a44)' }}>
                         <h1 className='text-capitalize '>Forget your password</h1>
                         <p>Enter your email</p>
-                        <form onSubmit={handleForget}>
+                        <form onSubmit={handleForgetPassword}>
                             <input type="email" name='email' className="form-control mb-2" id="email" placeholder="Enter Your Email" required />
-                            <button type="submit" className="btn border border-white text-white " >Send</button>
+                            <button type="submit" className="btn border border-white text-white w-100" >Send</button>
                         </form>
                     </div>
                 </div>

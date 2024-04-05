@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default function Hero() {
     return (
@@ -11,7 +12,7 @@ export default function Hero() {
                             <h1 className="text-uppercase fw-bold " style={{color:"#002856"}}>Our Doctors Are Always In Your Side</h1>
                             <p className="text-uppercase text-black-50 ">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
                                 voluptatum.</p>
-                            <a href="appoinment.html"><button type="button" className="btn btn-lg text-white " style={{background:"#FD4169"}}>Get Appoinment</button></a>
+                            <Link to="find-doctor"><button type="button" className="btn btn-lg text-white " style={{background:"#FD4169"}}>Get Appoinment</button></Link>
                         </div>
                     </div>
                     <div className="carousel-item"
@@ -20,7 +21,7 @@ export default function Hero() {
                             <h1 className="text-uppercase fw-bold " style={{color:"#002856"}}>Our Doctors Are Always In Your Side</h1>
                             <p className="text-uppercase text-black-50 ">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
                                 voluptatum.</p>
-                            <a href="appoinment.html"><button type="button" className="btn btn-primary btn-lg">Get Appoinment</button></a>
+                                <Link to="find-doctor"><button type="button" className="btn btn-lg text-white " style={{background:"#FD4169"}}>Get Appoinment</button></Link>
                         </div>
                     </div>
                     <div className="carousel-item"
@@ -29,7 +30,7 @@ export default function Hero() {
                             <h1 className="text-uppercase fw-bold " style={{color:"#002856"}}>Our Doctors Are Always In Your Side</h1>
                             <p className="text-uppercase text-black-50 ">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
                                 voluptatum.</p>
-                            <a href="appoinment.html"><button type="button" className="btn btn-lg" style={{background:"#FD4169"}}>Get Appoinment</button></a>
+                                <Link to="find-doctor"><button type="button" className="btn btn-lg text-white " style={{background:"#FD4169"}}>Get Appoinment</button></Link>
                         </div>
                     </div>
                 </div>

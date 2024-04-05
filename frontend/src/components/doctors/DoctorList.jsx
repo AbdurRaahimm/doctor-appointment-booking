@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from 'react-router-dom';
 import DoctorCard from './DoctorCard'
 import { convertTo12HourFormat } from '../../utilis/convertTo12HourFormat'
 import { formatPrice } from '../../utilis/formatPrice'
@@ -38,7 +39,7 @@ export default function DoctorList({ doctor }) {
                             {/* 9:00 AM to 6:00 PM */}
                             {`${convertTo12HourFormat(doctor.timeFrom)} to ${convertTo12HourFormat(doctor.timeTo)} `}
                         </span>
-                        <a className="border rounded-4 px-2 py-1 text-decoration-none " href="#">Book Now</a>
+                        <Link state={doctor} className="border rounded-4 px-2 py-1 text-decoration-none text-capitalize  " to="/doctor-profile">View profile</Link>
                     </div>
                 </div>
             </div>

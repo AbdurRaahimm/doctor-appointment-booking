@@ -1,11 +1,11 @@
 import React from 'react'
 import Subscribe from '../components/Subscribe'
-// import Breadcum from '../components/Breadcum'
+import Breadcum from '../components/Breadcum'
 
 export default function Contact() {
   return (
     <>
-      {/* <Breadcum title='Contact Us' /> */}
+      <Breadcum title='Contact Us' />
       <section className='py-4'>
         <div className="container">
           <div className="row">
@@ -19,22 +19,23 @@ export default function Contact() {
                 facilisi. Duis nec semper libero. Nulla facilisi. Duis nec semper
                 libero.
               </p>
-              <form>
+              <form action="https://api.web3forms.com/submit" method="POST">
+                <input type="hidden" name="access_key" value={import.meta.env.VITE_WEB3FORM} />
+                <input type="hidden" name="subject" value="Contact From Doctor Appointment booking" />
+                <input type="hidden" name="redirect" value="https://react-blog-localstorage.vercel.app/sucess" />
                 <div className="form-group">
-                  <label htmlFor="name">Name</label>
-                  <input type="text" className="form-control" id="name" />
+                  <label htmlFor="name">Name </label>
+                  <input type="text" name='name' className="form-control" id="name" />
                 </div>
                 <div className="form-group">
                   <label htmlFor="email">Email</label>
-                  <input type="email" className="form-control" id="email" />
+                  <input type="email" name='email' className="form-control" id="email" />
                 </div>
                 <div className="form-group">
                   <label htmlFor="message">Message</label>
-                  <textarea className="form-control" id="message" rows="3"></textarea>
+                  <textarea className="form-control" name="message" id="message" rows="3"></textarea>
                 </div>
-                <button type="submit" className="btn btn-primary my-3">
-                  Submit
-                </button>
+                <button type="submit" className="btn my-3 text-white " style={{ background: "#40b176" }}>Submit</button>
               </form>
             </div>
             <div className="col-md-4">

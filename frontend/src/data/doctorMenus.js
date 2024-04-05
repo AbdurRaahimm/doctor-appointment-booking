@@ -6,12 +6,6 @@ export const doctorMenus = [
         icon: "bi bi-person",
     },
     {
-        id: 1,
-        name: "home",
-        path: "doctor-profile",
-        icon: "bi bi-person",
-    },
-    {
         id: 2,
         name: "appointments",
         path: "/appointments",

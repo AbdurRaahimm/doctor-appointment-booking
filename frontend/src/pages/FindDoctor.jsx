@@ -39,8 +39,14 @@ export default function FindDoctor() {
                                     onChange={(e) => { setstate(currentState => ({ ...currentState, address: e.target.value })) }}
                                     className='form-select' name="address" id="address">
                                     {
-                                        approvedDoctors.doctors.map(doctor => <option key={doctor._id} className='text-capitalize ' value={doctor.address}>{doctor.address}</option>)
+                                        // unique address 
+                                        [...new Set(approvedDoctors.doctors.map(doctor => doctor.address))].map(address => <option key={address} value={address} className='text-capitalize '>
+                                            {address} 
+                                            {/* count */}
+                                            ({approvedDoctors.doctors.filter(doctor => doctor.address === address).length})
+                                        </option>)
                                     }
+
                                     {/* <option value="Dhaka">Dhaka</option>
                                     <option value="Chattogram">Chattogram</option>
                                     <option value="Khulna">Khulna</option>
@@ -60,7 +66,12 @@ export default function FindDoctor() {
                                     onChange={(e) => { setstate(currentState => ({ ...currentState, specialist: e.target.value })) }}
                                     className='form-select' name="specialist" id="specialist">
                                     {
-                                        approvedDoctors.doctors.map(doctor => <option key={doctor._id} className='text-capitalize ' value={doctor.speciality}>{doctor.speciality}</option>)
+                                        // unique specialist 
+                                        [...new Set(approvedDoctors.doctors.map(doctor => doctor.speciality))].map(specialist => <option key={specialist} value={specialist} className='text-capitalize '>
+                                            {specialist}
+                                            {/* count */}
+                                            ({approvedDoctors.doctors.filter(doctor => doctor.speciality === specialist).length})
+                                        </option>)
                                     }
                                     {/* <option value="Cardiologist">Cardiologist</option>
                                     <option value="Dermatologist">Dermatologist</option>
@@ -81,7 +92,12 @@ export default function FindDoctor() {
                                     onChange={(e) => { setstate(currentState => ({ ...currentState, hospital: e.target.value })) }}
                                     className='form-select' name="hospital" id="hospital">
                                     {
-                                        approvedDoctors.doctors.map(doctor => <option key={doctor._id} className='text-capitalize ' value={doctor.hospital}>{doctor.hospital}</option>)
+                                        // unique hospital 
+                                        [...new Set(approvedDoctors.doctors.map(doctor => doctor.hospital))].map(hospital => <option key={hospital} value={hospital} className='text-capitalize '>
+                                            {hospital}
+                                            {/* count */}
+                                            ({approvedDoctors.doctors.filter(doctor => doctor.hospital === hospital).length})
+                                        </option>)
                                     }
                                     {/* <option disabled>Select Hospital</option>
                                     <option value="Apollo Hospital">Apollo Hospital</option>
@@ -142,7 +158,7 @@ export default function FindDoctor() {
                                 <select 
                                 onChange={(e) => { setstate(currentState => ({ ...currentState, showPerItem: e.target.value })) }}
                                 name="show" id="showPerItem" className="form-select px-4 py-2 rounded focus:outline-none">
-                                    <option selected disabled>Show Product per Item</option>
+                                    <option selected disabled>Show Doctors per Item</option>
                                     <option value="2">Show 2</option>
                                     <option value="6">Show 6</option>
                                     <option value="12">Show 12</option>

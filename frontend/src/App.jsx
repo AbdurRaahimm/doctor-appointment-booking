@@ -20,6 +20,7 @@ import Notifications from "./pages/Notifications";
 import UsersList from "./pages/admin/UsersList";
 import DoctorsList from "./pages/admin/DoctorsList";
 import DoctorProfile from "./pages/doctor/DoctorProfile";
+import ResetPassword from "./pages/ResetPassword";
 
 
 
@@ -31,10 +32,9 @@ const router = createBrowserRouter(
         <Route path="contact" element={<Contact />} />
         <Route path="about" element={<About />} />
         <Route path="find-doctor" element={<FindDoctor />} />
-
+        <Route path="doctor-profile" element={<DoctorProfile />} />
         <Route path="dashboard" element={<DashboardLayout />} errorElement={<ErrorPage />}>
           <Route index  element={<ProtectRoutes> <Profile /></ProtectRoutes>} />
-          <Route path="doctor-profile"  element={<ProtectRoutes> <DoctorProfile /></ProtectRoutes>} />
           <Route path="user-list" element={<ProtectRoutes><UsersList /></ProtectRoutes>} />
           <Route path="doctor-list" element={<ProtectRoutes><DoctorsList /></ProtectRoutes>} />
           <Route path="apply-doctor" element={<ProtectRoutes><ApplyDoctor /></ProtectRoutes>} />
@@ -46,6 +46,7 @@ const router = createBrowserRouter(
       <Route path="signin" element={<PublicRoutes><SingIn /></PublicRoutes>} />
       <Route path="signup" element={<PublicRoutes> <SingUp /> </PublicRoutes>} />
       <Route path="forgot-password" element={<PublicRoutes> <ForgotPassword /> </PublicRoutes>} />
+      <Route path="/reset-password/:token" element={<PublicRoutes> <ResetPassword /> </PublicRoutes>} />
       <Route path="otpverify" element={<ProtectRoutes> <OTPVerify />  </ProtectRoutes>} />
 
     </>

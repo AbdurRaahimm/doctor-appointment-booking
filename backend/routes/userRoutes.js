@@ -94,38 +94,40 @@ router.post('/login', async (req, res) => {
 });
 
 // forgot password
-router.get('/forgot-password', async (req, res) => {
+router.post('/forgot-password', async (req, res) => {
     try {
         // Check if the user exists
         const user = await User.findOne({ email: req.body.email });
         if (!user) {
             throw new Error('User does not exist');
         }
-
+        
         // Generate a token
-        const token = jwt.sign({ _id: user._id }, process.env.accessToken, { expiresIn: '5m' });
+        const Token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '30m' });
 
-        // Send the token to the user's email address 
+        // Send an email
         const transporter = nodemailer.createTransport({
-            service: 'gmail',
+            host: "smtp.elasticemail.com",
+            port: 2525,
+            secure: false,
             auth: {
-                user: process.env.email,
-                pass: process.env.password
+                user: process.env.EMAIL,
+                pass: process.env.PASSWORD
             }
         });
 
         const mailOptions = {
-            from: process.env.email,
-            to: user.email,
-            subject: 'Password Reset',
-            text: `Click on the link to reset your password: http://localhost:5173/reset-password/${token}`
+            from: process.env.EMAIL,
+            to: req.body.email,
+            subject: 'Password Reset Notification',
+            html: `<h1>Click <a href="http://localhost:5173/reset-password/${Token}">here</a> to reset your password</h1>`
         };
 
         transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
-                throw new Error('Email not sent');
+                throw new Error('Email could not be sent');
             }
-            res.status(200).json({ message: 'Email sent' });
+            res.status(200).json({ message: 'Email sent successfully' });
         }
         );
 
@@ -133,6 +135,28 @@ router.get('/forgot-password', async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 });
+
+// reset password
+router.post('/reset-password/:token', async (req, res) => {
+    try {
+        // Verify the token
+        const decoded = jwt.verify(req.params.token, process.env.JWT_SECRET);
+        // throw an error if the token is invalid
+        if (!decoded) {
+            throw new Error('Invalid token! ');
+        }
+        // Hash the password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(req.body.password, salt);
+        await User.findByIdAndUpdate(decoded._id, { password: hashedPassword });
+        res.status(200).json({ message: 'Password reset successful' });
+
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+
+});
+
 
 // logout
 router.get('/logout', (req, res) => {
