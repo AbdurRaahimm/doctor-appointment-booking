@@ -5,17 +5,17 @@ import DoctorList from '../components/doctors/DoctorList'
 import { fetchApprovedDoctors } from '../redux/approvedDoctorsSlice';
 
 export default function FindDoctor() {
-    // const [sortCriteria, setSortCriteria] = useState(' ');
     const [state, setstate] = useState({
         username: '',
         address: '',
         specialist: '',
         hospital: '',
+        reviews: '',
         sortCriteria: '',
         showPerItem: 6,
     })
     const approvedDoctors = useSelector(state => state.approvedDoctors);
-    //    console.log(approvedDoctors.doctors);
+    // console.log(approvedDoctors.doctors.length);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(fetchApprovedDoctors())
@@ -38,10 +38,11 @@ export default function FindDoctor() {
                                 <select
                                     onChange={(e) => { setstate(currentState => ({ ...currentState, address: e.target.value })) }}
                                     className='form-select' name="address" id="address">
+                                    <option value="">All</option>
                                     {
                                         // unique address 
                                         [...new Set(approvedDoctors.doctors.map(doctor => doctor.address))].map(address => <option key={address} value={address} className='text-capitalize '>
-                                            {address} 
+                                            {address}
                                             {/* count */}
                                             ({approvedDoctors.doctors.filter(doctor => doctor.address === address).length})
                                         </option>)
@@ -65,6 +66,7 @@ export default function FindDoctor() {
                                 <select
                                     onChange={(e) => { setstate(currentState => ({ ...currentState, specialist: e.target.value })) }}
                                     className='form-select' name="specialist" id="specialist">
+                                    <option value="">All</option>
                                     {
                                         // unique specialist 
                                         [...new Set(approvedDoctors.doctors.map(doctor => doctor.speciality))].map(specialist => <option key={specialist} value={specialist} className='text-capitalize '>
@@ -91,8 +93,9 @@ export default function FindDoctor() {
                                 <select
                                     onChange={(e) => { setstate(currentState => ({ ...currentState, hospital: e.target.value })) }}
                                     className='form-select' name="hospital" id="hospital">
+                                    <option value="">All</option>
                                     {
-                                        // unique hospital 
+                                        // unique hospital display and first display All option to show all hospitals 
                                         [...new Set(approvedDoctors.doctors.map(doctor => doctor.hospital))].map(hospital => <option key={hospital} value={hospital} className='text-capitalize '>
                                             {hospital}
                                             {/* count */}
@@ -115,16 +118,16 @@ export default function FindDoctor() {
                             {/* reviews */}
                             <div className=" position-relative ">
                                 <p className='fw-bold text-capitalize ' style={{ color: "#fd4169" }}>find by reviews </p>
-                                <select className='form-select' name="reviews" id="reviews">
-                                    {
-                                        // approvedDoctors.doctors.map(doctor => <option value={doctor.rating}>{doctor.rating}</option>)
-                                    }
+                                <select
+                                    onChange={(e) => { setstate(currentState => ({ ...currentState, reviews: e.target.value })) }}
+                                    className='form-select' name="reviews" id="reviews">
                                     <option disabled>Select Reviews</option>
-                                    <option value="5">5 (10 reviews)</option>
-                                    <option value="4">4 (20 reviews)</option>
-                                    <option value="3">3 (30 reviews)</option>
-                                    <option value="2">2 (40 reviews)</option>
-                                    <option value="1">1 (50 reviews)</option>
+                                    <option value="">All</option>
+                                    <option value="1">1 Star</option>
+                                    <option value="2">2 Star</option>
+                                    <option value="3">3 Star</option>
+                                    <option value="4">4 Star</option>
+                                    <option value="5">5 Star</option>
                                 </select>
                             </div>
                             <hr />
@@ -135,6 +138,9 @@ export default function FindDoctor() {
                                     address: '',
                                     specialist: '',
                                     hospital: '',
+                                    reviews: '',
+                                    sortCriteria: '',
+                                    showPerItem: 6,
                                 })
                             }} className='btn btn-danger w-100 text-capitalize '>Reset filter</button>
 
@@ -147,7 +153,7 @@ export default function FindDoctor() {
                             {/* sorted */}
                             <div className='py-2 d-flex justify-content-between gap-2'>
                                 <select
-                                onChange={(e) => { setstate(currentState => ({ ...currentState, sortCriteria: e.target.value })) }}
+                                    onChange={(e) => { setstate(currentState => ({ ...currentState, sortCriteria: e.target.value })) }}
                                     name="sort" id="sortFilter" className=" form-select px-4 py-2 rounded focus:outline-none">
                                     <option value="default">Sort by Default</option>
                                     <option value="rating">Sort by Rating</option>
@@ -155,10 +161,11 @@ export default function FindDoctor() {
                                     <option value="low">Sort by Price: low to high</option>
                                     <option value="high">Sort by Price: high to low</option>
                                 </select>
-                                <select 
-                                onChange={(e) => { setstate(currentState => ({ ...currentState, showPerItem: e.target.value })) }}
-                                name="show" id="showPerItem" className="form-select px-4 py-2 rounded focus:outline-none">
+                                <select
+                                    onChange={(e) => { setstate(currentState => ({ ...currentState, showPerItem: e.target.value })) }}
+                                    name="show" id="showPerItem" className="form-select px-4 py-2 rounded focus:outline-none">
                                     <option selected disabled>Show Doctors per Item</option>
+                                    <option value=" ">Show All</option>
                                     <option value="2">Show 2</option>
                                     <option value="6">Show 6</option>
                                     <option value="12">Show 12</option>
@@ -169,32 +176,36 @@ export default function FindDoctor() {
                                 {
                                     approvedDoctors.loading ? <h1>Loading...</h1> :
                                         approvedDoctors.error ? <h1>{approvedDoctors.error}</h1> :
-                                            approvedDoctors.doctors
-                                                .filter(doctor => doctor.name.toLowerCase().includes(state.username.toLowerCase()) )
-                                                // Adding address filter
-                                                .filter(doctor => state.address ? doctor.address === state.address : true)
-                                                // Adding specialist filter
-                                                .filter(doctor => state.specialist ? doctor.speciality === state.specialist : true)
-                                                // Adding hospital filter
-                                                .filter(doctor => state.hospital ? doctor.hospital === state.hospital : true)
-                                                // sorted 
-                                                .sort((a, b) => {
-                                                    if (state.sortCriteria === 'rating') {
-                                                        return b.rating - a.rating;
-                                                    }
-                                                    if (state.sortCriteria === 'new') {
-                                                        return new Date(b.createdAt) - new Date(a.createdAt);
-                                                    }
-                                                    if (state.sortCriteria === 'low') {
-                                                        return a.fee - b.fee;
-                                                    }
-                                                    if (state.sortCriteria === 'high') {
-                                                        return b.fee - a.fee;
-                                                    }
-                                                    return a;
-                                                })
-                                                .slice(0, state.showPerItem)
-                                                .map(doctor => <DoctorList key={doctor._id} doctor={doctor} />)
+                                            approvedDoctors.doctors.length === 0 ? <h1>No Doctors Found</h1> :
+                                                approvedDoctors.doctors
+                                                    .filter(doctor => doctor.name.toLowerCase().includes(state.username.toLowerCase()))
+                                                    // Adding address filter
+                                                    .filter(doctor => state.address ? doctor.address === state.address : true)
+                                                    // Adding specialist filter
+                                                    .filter(doctor => state.specialist ? doctor.speciality === state.specialist : true)
+                                                    // Adding reviews filter
+                                                    .filter(doctor => state.reviews ? doctor.reviews.length === parseInt(state.reviews) : true)
+                                                    // Adding hospital filter
+                                                    .filter(doctor => state.hospital ? doctor.hospital === state.hospital : true)
+                                                    // sorted 
+                                                    .sort((a, b) => {
+                                                        if (state.sortCriteria === 'rating') {
+                                                            return b.reviews.length - a.reviews.length
+                                                        }
+                                                        if (state.sortCriteria === 'new') {
+                                                            return new Date(b.createdAt) - new Date(a.createdAt)
+                                                        }
+                                                        if (state.sortCriteria === 'low') {
+                                                            return a.fee - b.fee
+                                                        }
+                                                        if (state.sortCriteria === 'high') {
+                                                            return b.fee - a.fee
+                                                        }
+                                                        return a
+                                                    })
+                                                    // .slice(0, state.showPerItem)
+                                                    .slice(0, state.showPerItem === ' ' ? approvedDoctors.doctors.length : state.showPerItem)
+                                                    .map(doctor => <DoctorList key={doctor._id} doctor={doctor} />)
                                 }
                             </div>
                         </div>

@@ -250,4 +250,43 @@ router.delete('/delete-all-notifications/:id', authVerify, async (req, res) => {
 });
 
 
+// users reviews to doctor 
+router.post('/review-doctor/:id', authVerify, async (req, res) => {
+    try {
+        const doctor = await Doctor.findById(req.params.id);
+        if (!doctor) {
+            throw new Error('Doctor not found');
+        }
+        const newReview = {
+            text: req.body.text,
+            rating: req.body.rating,
+            userId: req.body.userId,
+            userName: req.body.userName,
+            image: req.body.image
+        };
+        doctor.reviews.push(newReview);
+        await doctor.save();
+        res.status(201).json({ message: 'Review added successfully' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// get all reviews of doctor by id 
+router.get('/get-reviews/:id', async (req, res) => {
+    try {
+        const doctor = await Doctor.findById(req.params.id);
+        if (!doctor) {
+            throw new Error('Doctor not found');
+        }
+        res.status(200).json(doctor.reviews);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+
+
+
+
 module.exports = router;

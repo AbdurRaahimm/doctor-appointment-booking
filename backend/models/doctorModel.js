@@ -56,10 +56,10 @@ const doctorSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please provide a timeTo']
     },
-    about:{
-        type: String,
-        required: [true, 'Please provide an about']
-    },
+    // about:{
+    //     type: String,
+    //     required: [true, 'Please provide an about']
+    // },
     hospital: {
         type: String,
         required: [true, 'Please provide a hospital']
@@ -82,9 +82,16 @@ const doctorSchema = new mongoose.Schema({
                 type: Date,
                 default: Date.now
             },
-            user: {
+            userId: {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: 'User'
+            },
+            userName: {
+                type: String,
+                required: true
+            },
+            image: {
+                type: String,
+                default: "https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png"            
             }
         }
     ],

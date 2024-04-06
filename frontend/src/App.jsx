@@ -32,7 +32,7 @@ const router = createBrowserRouter(
         <Route path="contact" element={<Contact />} />
         <Route path="about" element={<About />} />
         <Route path="find-doctor" element={<FindDoctor />} />
-        <Route path="doctor-profile" element={<DoctorProfile />} />
+        <Route path="doctor-profile/:id" element={<DoctorProfile />} />
         <Route path="dashboard" element={<DashboardLayout />} errorElement={<ErrorPage />}>
           <Route index  element={<ProtectRoutes> <Profile /></ProtectRoutes>} />
           <Route path="user-list" element={<ProtectRoutes><UsersList /></ProtectRoutes>} />

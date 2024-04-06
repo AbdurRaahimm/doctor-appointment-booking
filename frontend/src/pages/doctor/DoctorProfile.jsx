@@ -1,11 +1,30 @@
-import React from 'react'
-import { useLocation } from 'react-router-dom'
+import { useState, useEffect, useRef } from 'react'
+import { useLocation, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { convertTo12HourFormat } from '../../utilis/convertTo12HourFormat';
+import { formatPrice } from '../../utilis/formatPrice';
+import FetchReviews from '../../components/reviews/FetchReviews';
+import AddReviews from '../../components/reviews/AddReviews';
+import { getCookie } from '../../utilis/getCookie';
+import { fetchReviews } from '../../redux/reviewsSlice';
 
 export default function DoctorProfile() {
+    const inputRef = useRef();
+    const { id } = useParams();
+    const [open, setOpen] = useState(false);
+    const token = getCookie("token")
     const locate = useLocation();
-    console.log(locate.state)
+    // console.log(locate)
     const doctor = locate.state;
+    const reviews = useSelector(state => state.reviews.reviews)
+    const dispatch = useDispatch();
+    // console.log(reviews)
+    // console.log(id)
+    useEffect(() => {
+        dispatch(fetchReviews(id));
+        inputRef.current.min = new Date().toISOString().split('T')[0];
+        inputRef.current.max = new Date(new Date().setDate(new Date().getDate() + 7)).toISOString().split('T')[0];
+    }, [])
     return (
         <section className='py-5 px-4  '>
             <div className="row">
@@ -13,7 +32,7 @@ export default function DoctorProfile() {
                     <div className="docProfile bg-white shadow rounded d-flex">
                         <div className="docImg">
                             {/* <img className='p-4 rounded-5 h-100 w-100' src="https://demo.freaktemplate.com/bookappointment/public/upload/doctors/6.jpg" alt="Doctor" /> */}
-                            <img width={200} className='p-4 rounded-5' src={`http://localhost:3000/${doctor.image}`} alt="Doctor" />
+                            <img width={220} className='p-4 rounded-5' src={`http://localhost:3000/${doctor.image}`} alt="Doctor" />
                         </div>
                         <div className="docDetails py-4 px-3">
                             <div className="name-box">
@@ -27,29 +46,47 @@ export default function DoctorProfile() {
                                     {doctor.experience} years of experience
                                 </p>
                             </div>
-                            <div class="rating">
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star text-warning"></i>
-                                <i class="bi bi-star text-warning"></i>
-                                <i class="bi bi-star-half text-warning"></i>
-                                (2)
+                            <div className="rating">
+                                {
+                                    // (reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length).toFixed(1)
+                                }
+
+                                {
+                                    Array.from({ length: 5 }, (_, index) => {
+                                        let number = index + 0.5;
+                                        return (
+                                            <label key={index} className='text-3xl cursor-pointer '>
+                                                {
+                                                    reviews.length >= index + 1 ? (
+                                                        <i className='bi bi-star-fill text-warning  '></i>
+                                                    ) : reviews.length >= number ? (
+                                                        <i className='bi bi-star-half text-warning '></i>
+                                                    ) : (
+                                                        <i className='bi bi-star text-warning '></i>
+                                                    )
+                                                }
+                                            </label>
+                                        )
+                                    })
+                                }
+                                { ` (${reviews.length} ${reviews.length > 1 ? 'Reviews' : 'Review'})`}
+
                             </div>
                             <div className="desc">
                                 <span>Dr. Giorgos is a Urologist in ABC City and has an experience of 10 years in this field. Dr. Giorgos practices at XYZ Hospital in ABC City.</span>
                             </div>
-                            <div class="location-box d-flex justify-content-between pr-4">
+                            <div className="location-box d-flex justify-content-between pr-4">
                                 <div className="">
-                                    <i class="bi bi-geo-alt-fill" style={{ color: "#fd4169" }}></i>
-                                    <span> 
+                                    <i className="bi bi-geo-alt-fill" style={{ color: "#fd4169" }}></i>
+                                    <span>
                                         {doctor.address}
                                     </span>
                                 </div>
                                 {/* <a className='text-decoration-none text-capitalize' href="">View map</a> */}
                             </div>
-                            <div class="contact-box">
-                                <i class="bi bi-telephone-fill" style={{ color: "#fd4169" }}></i>
-                                <span>  <a className='text-decoration-none text-black-50 ' href="tel:1234567890"> 
+                            <div className="contact-box">
+                                <i className="bi bi-telephone-fill" style={{ color: "#fd4169" }}></i>
+                                <span>  <a className='text-decoration-none text-black-50 ' href="tel:1234567890">
                                     {doctor.phone}
                                 </a></span>
                             </div>
@@ -78,11 +115,20 @@ export default function DoctorProfile() {
                             </div>
                             <div className="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                                 <h5 className='fw-bolder'>Location</h5>
-                                <p>123, XYZ Street, ABC City</p>
+                                <p>{doctor.address}</p>
                             </div>
                             <div className="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                                <h5 className='fw-bolder'>Reviews</h5>
-                                <p>Dr. Giorgos is a Urologist in ABC City and has an experience of 10 years in this field. Dr. Giorgos practices at XYZ Hospital in ABC City.</p>
+                                <div className="d-flex justify-content-between ">
+                                    <h5 className='fw-bolder'>{doctor.name + "'s Reviews"}</h5>
+                                    {token && <button className='btn text-white' style={{ backgroundImage: 'linear-gradient(to right, #fc6076, #ff9a44)' }} onClick={() => setOpen(!open)}>Add Reviews</button>}
+                                </div>
+                                {open && <AddReviews />}
+                                {
+                                    reviews.length === 0 ? <h5>No Reviews</h5> :
+                                        reviews.map(review => (
+                                            <FetchReviews key={review._id} review={review} />
+                                        ))
+                                }
                             </div>
 
                         </div>
@@ -94,35 +140,33 @@ export default function DoctorProfile() {
                         <div className=" p-4 rounded-top " style={{ background: "#40b176" }}>
                             <h5 className='fw-bolder text-white fs-3 '>Book Appointment</h5>
                             <p className='text-white-50 '>
-                            {/* Monday to Sunday: 9:00 AM to 6:00 PM */}
+                                {/* Monday to Sunday: 9:00 AM to 6:00 PM */}
 
-                            {`Available on ${convertTo12HourFormat(doctor.timeFrom)} to ${convertTo12HourFormat(doctor.timeTo)}`}
+                                {`Available on ${convertTo12HourFormat(doctor.timeFrom)} to ${convertTo12HourFormat(doctor.timeTo)}`}
+                            </p>
+                            <p className='text-white-50 '>
+                                Consultation Fee : <strong>{formatPrice(doctor.fee)}</strong>
                             </p>
                         </div>
                         <div className="p-3">
                             <form action="">
                                 <div className="mb-3">
-                                    <label for="date" className="form-label">Date</label>
-                                    <input type="date" className="form-control" id="date" />
+                                    <label htmlFor="date" className="form-label">Date :</label>
+                                    <input type="date" ref={inputRef} className="form-control" id="date" />
                                 </div>
                                 <div className="mb-3">
-                                    <label for="time" className="form-label">Time</label>
-                                    <select className='form-select' name="" id="">
-                                        <option value="9:00 AM">9:00 AM</option>
-                                        <option value="10:00 AM">10:00 AM</option>
-                                        <option value="11:00 AM">11:00 AM</option>
-                                        <option value="12:00 PM">12:00 PM</option>
-                                        <option value="1:00 PM">1:00 PM</option>
-                                        <option value="2:00 PM">2:00 PM</option>
-                                        <option value="3:00 PM">3:00 PM</option>
-                                        <option value="4:00 PM">4:00 PM</option>
-                                        <option value="5:00 PM">5:00 PM</option>
-                                        <option value="6:00 PM">6:00 PM</option>
-                                    </select>
-                                </div>
-                                <div className="mb-3">
-                                    {/* timeSlot */}
-                                    <label for="timeSlot" className="form-label">Time Slot</label>
+                                    <label htmlFor="timeSlot" className="form-label">Time Slot :</label>
+                                    <div className="d-flex gap-2 flex-wrap ">
+                                        <button className="btn border text-uppercase  ">9.00 Am </button>
+                                        <button className="btn border text-uppercase  ">9.00 Am </button>
+                                        <button className="btn border text-uppercase  ">9.00 Am </button>
+                                        <button className="btn border text-uppercase  ">9.00 Am </button>
+                                        <button className="btn border text-uppercase  ">9.00 Am </button>
+                                        <button className="btn border text-uppercase  ">9.00 Am </button>
+                                        <button className="btn border text-uppercase  ">9.00 Am </button>
+                                        <button className="btn border text-uppercase  ">9.00 Am </button>
+                                    </div>
+
                                 </div>
                                 <button type="submit" className="btn text-white w-100 text-capitalize  " style={{ backgroundImage: 'linear-gradient(to right, #fc6076, #ff9a44)' }}>Book now</button>
                             </form>

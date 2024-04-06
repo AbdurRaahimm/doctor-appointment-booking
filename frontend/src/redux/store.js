@@ -3,6 +3,7 @@ import userSlice from './userSlice';
 import userByIdSlice from './userByIdSlice';
 import doctorSlice from './doctorSlice';
 import approvedDoctorsSlice from './approvedDoctorsSlice';
+import reviewsSlice from './reviewsSlice';
 
 
 const store = configureStore({
@@ -11,6 +12,7 @@ const store = configureStore({
         userById: userByIdSlice,
         doctor: doctorSlice,
         approvedDoctors: approvedDoctorsSlice,
+        reviews: reviewsSlice,
     }
 })
 
