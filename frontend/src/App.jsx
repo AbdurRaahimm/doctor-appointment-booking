@@ -21,6 +21,9 @@ import UsersList from "./pages/admin/UsersList";
 import DoctorsList from "./pages/admin/DoctorsList";
 import DoctorProfile from "./pages/doctor/DoctorProfile";
 import ResetPassword from "./pages/ResetPassword";
+import DoctorAppointments from "./pages/DoctorAppointments";
+import UserAppointment from "./pages/UserAppointment";
+
 
 
 
@@ -39,6 +42,8 @@ const router = createBrowserRouter(
           <Route path="doctor-list" element={<ProtectRoutes><DoctorsList /></ProtectRoutes>} />
           <Route path="apply-doctor" element={<ProtectRoutes><ApplyDoctor /></ProtectRoutes>} />
           <Route path="notifications" element={<ProtectRoutes><Notifications /></ProtectRoutes>} />
+          <Route path="doctor-appointments" element={<ProtectRoutes><DoctorAppointments /></ProtectRoutes>} />
+          <Route path="user-appointments" element={<ProtectRoutes><UserAppointment /></ProtectRoutes>} />
         </Route>
 
       </Route>
@@ -47,7 +52,7 @@ const router = createBrowserRouter(
       <Route path="signup" element={<PublicRoutes> <SingUp /> </PublicRoutes>} />
       <Route path="forgot-password" element={<PublicRoutes> <ForgotPassword /> </PublicRoutes>} />
       <Route path="/reset-password/:token" element={<PublicRoutes> <ResetPassword /> </PublicRoutes>} />
-      <Route path="otpverify" element={<ProtectRoutes> <OTPVerify />  </ProtectRoutes>} />
+      <Route path="otpverify" element={<PublicRoutes> <OTPVerify />  </PublicRoutes>} />
 
     </>
 

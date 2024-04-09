@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify'
 import { fetchReviews } from '../../redux/reviewsSlice';
+import { getCookie } from '../../utilis/getCookie';
 
 export default function AddReviews() {
     const [loading, setLoading] = useState(false);
@@ -11,6 +12,7 @@ export default function AddReviews() {
     const { id } = useParams();
     const user = JSON.parse(localStorage.getItem("user")) || [];
     const dispatch = useDispatch();
+    const token = getCookie("token")
 
     const handleAddReviews = async (e) => {
         e.preventDefault();
@@ -27,7 +29,7 @@ export default function AddReviews() {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${user.Token}`
+                    "Authorization": `Bearer ${token}`
                 },
                 body: JSON.stringify({
                     text: review,
@@ -46,7 +48,7 @@ export default function AddReviews() {
                 setLoading(false)
             } else {
                 toast.error(data.message)
-                
+                setLoading(false)
             }
         }
         catch (err) {

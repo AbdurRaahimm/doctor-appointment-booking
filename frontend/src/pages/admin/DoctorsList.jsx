@@ -2,9 +2,13 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchDoctors } from '../../redux/doctorSlice';
 import { toast } from 'react-toastify';
+import { getCookie } from '../../utilis/getCookie';
 
 export default function DoctorList() {
-  const user = JSON.parse(localStorage.getItem('user')) || [];
+  const [state, setState] = React.useState({
+    search: '',
+  });
+  const token = getCookie('token');
   const doctor = useSelector(state => state.doctor);
   // console.log(doctor._id)
   const dispatch = useDispatch();
@@ -12,14 +16,13 @@ export default function DoctorList() {
     dispatch(fetchDoctors());
   }, []);
 
-  const handleApprovedDoctor = async (e) => {
-    const doctorId = e.target.parentElement.parentElement.cells[0].innerText;
+  const handleApprovedDoctor = async (doctorId) => {
     console.log(doctorId);
     const response = await fetch(`http://localhost:3000/api/admin/approve-doctor/${doctorId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${user.Token}`
+        'Authorization': `Bearer ${token}`
       },
     });
     if (!response.ok) {
@@ -30,14 +33,13 @@ export default function DoctorList() {
     }
   };
 
-  const handleBlockedDoctor = async (e) => {
-    const doctorId = e.target.parentElement.parentElement.cells[0].innerText;
-    console.log(doctorId);
+  const handleBlockedDoctor = async (doctorId) => {
+    // console.log(doctorId);
     const response = await fetch(`http://localhost:3000/api/admin/block-doctor/${doctorId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${user.Token}`
+        'Authorization': `Bearer ${token}`
       },
     });
     if (!response.ok) {
@@ -48,14 +50,13 @@ export default function DoctorList() {
     }
   };
 
-  const handleUnblockedDoctor = async (e) => {
-    const doctorId = e.target.parentElement.parentElement.cells[0].innerText;
-    console.log(doctorId);
+  const handleUnblockedDoctor = async (doctorId) => {
+    // console.log(doctorId);
     const response = await fetch(`http://localhost:3000/api/admin/unblock-doctor/${doctorId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${user.Token}`
+        'Authorization': `Bearer ${token}`
       },
     });
     if (!response.ok) {
@@ -67,13 +68,25 @@ export default function DoctorList() {
   };
   return (
     <section className='py-2'>
-      <h3>Doctor List</h3>
+      <div className="d-flex justify-content-between ">
+        <h3>Doctor List</h3>
+        <div className="form-group">
+          <input
+            onChange={(e) => { setState({ ...state, search: e.target.value }); }}
+            type="search"
+            className="form-control"
+            width={400} autoComplete='off'
+            name="search"
+            id="search"
+            placeholder='Search by name or Phone number' />
+        </div>
+
+      </div>
 
       <div className='table-responsive'>
         <table className='table table-striped table-hover'>
           <thead>
             <tr>
-              <th>ID</th>
               <th>Username</th>
               <th>Email</th>
               <th>Phone</th>
@@ -91,23 +104,24 @@ export default function DoctorList() {
                 </div>
               </td></tr> :
                 doctor.error ? <tr><td>{doctor.error}</td></tr> :
-                  doctor.doctors.map(doctor => (
-                    <tr key={doctor._id}>
-                      <td>{doctor._id}</td>
-                      <td>{doctor.name}</td>
-                      <td>{doctor.email}</td>
-                      <td>{doctor.phone}</td>
-                      <td>{doctor.address}</td>
-                      <td>{doctor.speciality}</td>
-                      <td>{doctor.status}</td>
-                      <td>
-                        {doctor.status === 'pending' && <button onClick={handleApprovedDoctor} className='btn btn-sm btn-success'>Approve</button>}
-                        {doctor.status === 'approved' && <button onClick={handleBlockedDoctor} className='btn btn-sm btn-danger'>Block</button>}
-                        {doctor.status === 'blocked' && <button onClick={handleUnblockedDoctor} className='btn btn-sm btn-danger'>Unblock</button>}
+                  doctor.doctors
+                    .filter(doctor => doctor.name.toLowerCase().includes(state.search.toLowerCase()) || doctor.phone.includes(state.search))
+                    .map(doctor => (
+                      <tr key={doctor._id}>
+                        <td>{doctor.name}</td>
+                        <td>{doctor.email}</td>
+                        <td>{doctor.phone}</td>
+                        <td>{doctor.address}</td>
+                        <td>{doctor.speciality}</td>
+                        <td>{doctor.status}</td>
+                        <td>
+                          {doctor.status === 'pending' && <button onClick={() => handleApprovedDoctor(doctor._id)} className='btn btn-sm btn-success'>Approve</button>}
+                          {doctor.status === 'approved' && <button onClick={() => handleBlockedDoctor(doctor._id)} className='btn btn-sm btn-danger'>Block</button>}
+                          {doctor.status === 'blocked' && <button onClick={() => handleUnblockedDoctor(doctor._id)} className='btn btn-sm btn-danger'>Unblock</button>}
 
-                      </td>
-                    </tr>
-                  ))
+                        </td>
+                      </tr>
+                    ))
             }
           </tbody>
         </table>

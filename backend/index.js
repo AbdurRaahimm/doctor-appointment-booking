@@ -9,7 +9,11 @@ const port = 3000;
 
 
 app.use(cors({
-    origin: ["http://localhost:5173"],
+    origin: [
+        "http://localhost:5173",
+        "http://localhost:5174",
+        "http://localhost:5175",
+    ],
     credentials: true,
 }
 ));
@@ -26,11 +30,11 @@ app.use('/api/doctor', require('./routes/doctorRoutes'));
 
 
 
-
-
 app.get('/', authVerify, (req, res) => {
     res.send('Backend Server working!');
 });
+
+
 
 app.listen(port, async () => {
     console.log(`Server listening at http://localhost:${port}`);

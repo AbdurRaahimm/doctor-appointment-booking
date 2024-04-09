@@ -17,12 +17,30 @@ export default function NotifyNav() {
             <div className="">
                 <i className="bi bi-layout-text-sidebar-reverse fs-5"></i>
             </div>
-            <div className="position-relative pe-2 pointer " style={{cursor: "pointer"}} onClick={() => navigate('/dashboard/notifications')}>
+            {/* <button
+                onClick={() => navigate('/dashboard/notifications')}
+                type="button"
+                style={btnStyle}
+                className="btn  position-relative">
                 <i className="bi bi-bell-fill fs-5"></i>
-                <sup className=' text-center align-content-center  text-white rounded-circle position-absolute ' style={{ backgroundImage: 'linear-gradient(to right, #fc6076, #ff9a44)', display: 'inline-block', width: "20px", height: "20px" }}>
-                    {userById.unseenNotifications?.length} 
+                <span className="position-absolute top-0 start-100 translate-middle rounded-circle" style={{ backgroundImage: 'linear-gradient(to right, #fc6076, #ff9a44)' }}>
+                    {userById.unseenNotifications?.length}
+                </span>
+            </button> */}
+            <div className="position-relative  pointer " style={{ cursor: "pointer" }} onClick={() => navigate('/dashboard/notifications')}>
+                <i className="bi bi-bell-fill fs-5"></i>
+                <sup className=' text-center align-content-center  text-white rounded-circle position-absolute ' style={{ backgroundImage: 'linear-gradient(to right, #fc6076, #ff9a44)', display: 'inline-block', width: "20px", height: "20px", top:"-.5em", right:"-.9em" }}>
+                    {userById.unseenNotifications?.length}
                 </sup>
             </div>
         </div>
     )
+}
+
+
+const btnStyle = {
+    paddingRight: "4px",
+    paddingBottom: "0px",
+    paddingTop: "0px"
+
 }

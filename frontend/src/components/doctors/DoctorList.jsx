@@ -11,9 +11,9 @@ export default function DoctorList({ doctor }) {
         <div className="col-md-4 rounded mb-3">
             <div className="rounded " style={{ boxShadow: "0 20px 30px rgba(0,24,73,.1)", borderWidth: "none !important" }}>
                 {/* <img src={`http://localhost:3000/${doctor.image}`} alt="Doctor" className="card-img-top rounded-top w-75  " />  */}
-                <img src={`http://localhost:3000/${doctor.image}`} alt="Doctor" className="card-img-top rounded-top w-100  " />
+                <img  height={200} src={`http://localhost:3000/${doctor.image}`} alt="Doctor" className="card-img-top rounded-top " />
                 <div className="card-body rounded " style={{ background: "#fff", padding: "15px 15px 15px" }}>
-                    <h5 className="card-title fs-5 fw-bold  " style={{ color: "#767676" }}>{doctor.name}</h5>
+                    <h5 className="card-title fs-5 fw-bold text-capitalize  " style={{ color: "#767676" }}>{doctor.name}</h5>
                     <p className="card-text" style={{ marginBottom: "0" }}> {doctor.speciality} </p>
                     <div className="rating">
                         {

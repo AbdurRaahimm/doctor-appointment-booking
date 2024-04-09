@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { fetchUserById } from '../redux/userByIdSlice';
+import { getCookie } from '../utilis/getCookie';
 
 export default function Notifications() {
     const navigate = useNavigate();
     const userById = useSelector(state => state.userById.userById);
     const dispatch = useDispatch();
-    const user = JSON.parse(localStorage.getItem('user')) || [];
-    const token = user.Token;
+    const token = getCookie('token');
     // console.log(userById)
     const markAllAsRead = async (e) => {
         e.preventDefault();
@@ -85,6 +85,7 @@ export default function Notifications() {
                                             <div className="card-body">
                                                 <h5 className="card-title">{notification.type}</h5>
                                                 <p className="card-text">{notification.message}</p>
+                                                
                                                 {/* <a href={notification.link} className="btn btn-primary">Go somewhere</a> */}
                                             </div>
                                         </div>

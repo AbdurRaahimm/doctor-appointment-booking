@@ -1,13 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-const user = JSON.parse(localStorage.getItem('user')) || []; 
 
 export const fetchApprovedDoctors  = createAsyncThunk("fetchApprovedDoctors", async () => {
     const response = await fetch("http://localhost:3000/api/doctor/get-approved-doctors" , {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${user.Token}`
         },
     });
     if (!response.ok) {

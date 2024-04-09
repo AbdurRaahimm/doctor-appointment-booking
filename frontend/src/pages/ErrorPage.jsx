@@ -10,7 +10,7 @@ export default function ErrorPage() {
             <h2>{error.status} {error.statusText} </h2>
             {/* <p>{error.error.message}</p> */}
             {/* back */}
-            <button onClick={() => {navigate(-1)}} className='btn btn-primary'>Go back</button>
+            <button onClick={() => {navigate(-1)}} className='btn text-white ' style={{ backgroundImage: 'linear-gradient(to right, #fc6076, #ff9a44)' }}>Go back</button>
         </div>
     )
 }

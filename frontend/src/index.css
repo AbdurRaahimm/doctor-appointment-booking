@@ -19,3 +19,11 @@ input[type=number]::-webkit-inner-spin-button {
     /* color: linear-gradient(to right, #fc6076, #ff9a44) !important; */
     color: #fd4169 !important;
 }
+
+
+/* responsive */
+@media (max-width: 768px) {
+    .dashboard-sidebar {
+        color: rgba(16, 43, 29, 0.3)
+    }
+}

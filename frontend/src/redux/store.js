@@ -4,7 +4,9 @@ import userByIdSlice from './userByIdSlice';
 import doctorSlice from './doctorSlice';
 import approvedDoctorsSlice from './approvedDoctorsSlice';
 import reviewsSlice from './reviewsSlice';
-
+import timeSlotSlice from './timeSlotSlice';
+import doctorAppointmentsSlice from './doctorAppointmentsSlice';
+import userAppointmentsSlice from './userAppointmentsSlice';
 
 const store = configureStore({
     reducer: {
@@ -13,6 +15,9 @@ const store = configureStore({
         doctor: doctorSlice,
         approvedDoctors: approvedDoctorsSlice,
         reviews: reviewsSlice,
+        timeSlots: timeSlotSlice,
+        doctorAppointments: doctorAppointmentsSlice,
+        userAppointments: userAppointmentsSlice
     }
 })
 

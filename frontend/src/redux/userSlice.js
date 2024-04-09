@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { getCookie } from "../utilis/getCookie";
 
-const user = JSON.parse(localStorage.getItem('user')) || [];
-
+const token = getCookie("token");
 
 
 export const fetchUsers  = createAsyncThunk("fetchUsers", async () => {
@@ -9,12 +9,27 @@ export const fetchUsers  = createAsyncThunk("fetchUsers", async () => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${user.Token}`
+            'Authorization': `Bearer ${token}`
         },
     });
     if (!response.ok) {
         throw new Error('Server error');
     }   
+    return await response.json();
+});
+
+// user delete 
+export const deleteUser = createAsyncThunk("deleteUser", async (id) => {
+    const response = await fetch(`http://localhost:3000/api/user/delete-user/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${user.Token}`
+        },
+    });
+    if (!response.ok) {
+        throw new Error('Server error');
+    }
     return await response.json();
 });
 

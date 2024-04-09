@@ -8,10 +8,10 @@ export default function dashboardLayout() {
         <div className="py-3">
             <div className="container-fluid">
                 <div className="row">
-                    <div className="col-lg-3 col-md-12  py-2 ">
+                    <div className="col-lg-2 col-md-12  py-2 ">
                         <Sidebar />
                     </div>
-                    <div className="col-lg-9 col-md-12">
+                    <div className="col-lg-10 col-md-12">
                         <div className="container-fluid">
                             <NotifyNav />
                             <div className="row">

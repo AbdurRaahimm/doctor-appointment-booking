@@ -8,13 +8,13 @@ export const doctorMenus = [
     {
         id: 2,
         name: "appointments",
-        path: "/appointments",
+        path: "doctor-appointments",
         icon: "bi bi-calendar3",
     },
     {
         id: 3,
         name: "Patients",
-        path: "/patients",
+        path: "patients",
         icon: "bi bi-person-plus",
     },
 ]

@@ -9,7 +9,7 @@ export const userMenus = [
     {
         id: 2,
         name: "appointments",
-        path: "appointments",
+        path: "user-appointments",
         icon: "bi bi-calendar3",
     },
     {

@@ -2,13 +2,14 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useOTP } from '../context/OTPProvider';
 import { useDataPass } from '../context/DataPassProvider';
+import {toast} from 'react-toastify'
 
 export default function OTPVerify() {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const otp = useOTP();
     const { data } = useDataPass();
-    console.log(data)
+    // console.log(data)
     const handleInput = (e) => {
         if (e.target.value.length === 1) {
             if (e.target.nextElementSibling) {
@@ -38,10 +39,10 @@ export default function OTPVerify() {
             })
             const dataa = await response.json()
             if (response.ok) {
-                alert('User registered successfully!')
+                toast.success(dataa.message)
                 navigate('/signin')
             } else {
-                alert(dataa.message)
+                toast.error(dataa.message)
                 setLoading(false)
             }
         } else {

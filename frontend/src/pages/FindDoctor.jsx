@@ -123,11 +123,11 @@ export default function FindDoctor() {
                                     className='form-select' name="reviews" id="reviews">
                                     <option disabled>Select Reviews</option>
                                     <option value="">All</option>
-                                    <option value="1">1 Star</option>
-                                    <option value="2">2 Star</option>
-                                    <option value="3">3 Star</option>
-                                    <option value="4">4 Star</option>
-                                    <option value="5">5 Star</option>
+                                    <option value="1">1 Review</option>
+                                    <option value="2">2 Reviews</option>
+                                    <option value="3">3 Reviews</option>
+                                    <option value="4">4 Reviews</option>
+                                    <option value="5">5 Reviews</option>
                                 </select>
                             </div>
                             <hr />

@@ -1,15 +1,13 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import { getCookie } from '../utilis/getCookie';
 
 export default function ApplyDoctor() {
     const [loading, setLoading] = useState(false);
     const userById = useSelector(state => state.userById.userById);
-    console.log(userById);
-    const user = JSON.parse(localStorage.getItem('user')) || [];
-    const userId = user._id;
-    console.log(userId);
-    const token = user.Token;
+    console.log(userById.image);
+    const token = getCookie('token');
     const handleApplyDoctor = async (e) => {
         e.preventDefault();
         const form = e.target;
@@ -35,8 +33,8 @@ export default function ApplyDoctor() {
                 },
                 credentials: 'include',
                 body: JSON.stringify({
-                    userId: userId,
-                    image: user.image,
+                    userId: userById._id,
+                    image: userById.image,
                     name: formData.get('name'),
                     email: formData.get('email'),
                     phone: formData.get('phone'),
@@ -56,9 +54,9 @@ export default function ApplyDoctor() {
             if (response.ok) {
                 toast.success(data.message);
                 form.reset();
+                setLoading(false);
             } else {
                 toast.error(data.message);
-                setLoading(false);
             }
         } catch (error) {
             console.error('Server error:', error);

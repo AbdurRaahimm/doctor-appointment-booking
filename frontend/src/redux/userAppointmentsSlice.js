@@ -1,10 +1,10 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"; 
 import { getCookie } from "../utilis/getCookie";
 
 const token = getCookie("token");
 
-export const fetchDoctors  = createAsyncThunk("fetchDoctors", async () => {
-    const response = await fetch("http://localhost:3000/api/admin/get-doctors" , {
+export const fetchUserAppointments  = createAsyncThunk("fetchUserAppointments", async (userId) => {
+    const response = await fetch(`http://localhost:3000/api/user/get-appointments/${userId}` , {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -18,27 +18,28 @@ export const fetchDoctors  = createAsyncThunk("fetchDoctors", async () => {
 }
 );
 
-export const doctorSlice = createSlice({
-    name: 'doctor',
+
+const userAppointmentsSlice = createSlice({
+    name: 'userAppointments',
     initialState: {
-        doctors: [],
+        appointments: [],
         loading: false,
         error: false,
     },
     reducers: { },
     extraReducers: (builder) => { 
-        builder.addCase(fetchDoctors.pending, (state) => {
+        builder.addCase(fetchUserAppointments.pending, (state) => {
             state.loading = true;
         });
-        builder.addCase(fetchDoctors.fulfilled, (state, action) => {
-            state.doctors = action.payload;
+        builder.addCase(fetchUserAppointments.fulfilled, (state, action) => {
+            state.appointments = action.payload;
             state.loading = false;
         });
-        builder.addCase(fetchDoctors.rejected, (state, action) => {
+        builder.addCase(fetchUserAppointments.rejected, (state, action) => {
             state.loading = false;
             state.error = action.error.message;
         });
     },
 });
 
-export default doctorSlice.reducer;
+export default userAppointmentsSlice.reducer;

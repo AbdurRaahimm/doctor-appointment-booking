@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
-import {  setCookie } from '../utilis/getCookie';
+import { setCookie } from '../utilis/getCookie';
+import { useRef } from 'react';
 
 
 
 export default function SingIn() {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+    const inputRef = useRef();
     const handleSingIn = async (e) => {
         e.preventDefault();
         setLoading(true)
@@ -27,7 +29,7 @@ export default function SingIn() {
             if (response.ok) {
                 toast(data.message);
                 localStorage.setItem('user', JSON.stringify(data.user));
-                setCookie("token", data.user.Token, 30);
+                // setCookie("token", data.user.Token, 30);
                 // navigate('/');
                 window.location.href = "/";
             } else {
@@ -39,6 +41,18 @@ export default function SingIn() {
             console.log(err)
         }
 
+    }
+
+    const showPassword = (e) => {
+        if (inputRef.current.type === 'password') {
+            inputRef.current.type = 'text';
+            e.target.classList.remove('bi-eye')
+            e.target.classList.add('bi-eye-slash')
+        } else {
+            inputRef.current.type = 'password';
+            e.target.classList.remove('bi-eye-slash')
+            e.target.classList.add('bi-eye')
+        }
     }
     return (
         <section className="min-vh-100 pt-5    " style={{ backgroundImage: 'linear-gradient(to right, #25aae1, #40e495, #30dd8a, #2bb673)' }}  >
@@ -63,7 +77,14 @@ export default function SingIn() {
                                     <label htmlFor="password">Password</label>
                                     <Link to="/forgot-password" className='text-decoration-none'>Forgot Password?</Link>
                                 </div>
-                                <input type="password" name='password' className="form-control" id="password" required />
+                                <div className="position-relative">
+                                    <i onClick={showPassword} className="bi bi-eye position-absolute p-2 end-0" style={{
+                                        top: '50%',
+                                        transform: 'translateY(-50%)',
+                                        cursor: 'pointer'
+                                    }}></i>
+                                    <input type="password" ref={inputRef} name='password' className="form-control"  required />
+                                </div>
                             </div>
                             {/* forgot password */}
 

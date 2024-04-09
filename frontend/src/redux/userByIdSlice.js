@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { getCookie } from "../utilis/getCookie";
 
-const user = JSON.parse(localStorage.getItem('user')) || [];
-// console.log(user.Token)
-const token = user.Token;
+const token = getCookie("token");
 
 export const fetchUserById  = createAsyncThunk("fetchUserById", async (id) => {
     const response = await fetch(`http://localhost:3000/api/user/get-user/${id}`, {

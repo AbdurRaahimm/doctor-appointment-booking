@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const doctorSchema = new mongoose.Schema({
     userId:{
         type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
         required: [true, 'Please provide a user']
     },
     image:{
@@ -56,10 +57,10 @@ const doctorSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please provide a timeTo']
     },
-    // about:{
-    //     type: String,
-    //     required: [true, 'Please provide an about']
-    // },
+    about:{
+        type: String,
+        required: [true, 'Please provide an about']
+    },
     hospital: {
         type: String,
         required: [true, 'Please provide a hospital']

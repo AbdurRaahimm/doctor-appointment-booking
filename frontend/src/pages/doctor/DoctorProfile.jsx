@@ -7,17 +7,26 @@ import FetchReviews from '../../components/reviews/FetchReviews';
 import AddReviews from '../../components/reviews/AddReviews';
 import { getCookie } from '../../utilis/getCookie';
 import { fetchReviews } from '../../redux/reviewsSlice';
+import TimeSlots from '../../components/TimeSlots';
+import { addTimeSlot } from '../../redux/timeSlotSlice';
+
 
 export default function DoctorProfile() {
     const inputRef = useRef();
     const { id } = useParams();
     const [open, setOpen] = useState(false);
+    const [selectedDate, setSelectedDate] = useState(null);
     const token = getCookie("token")
     const locate = useLocation();
     // console.log(locate)
     const doctor = locate.state;
+    // console.log(doctor)
     const reviews = useSelector(state => state.reviews.reviews)
     const dispatch = useDispatch();
+    const handleTimeSlots = (e) => {
+        setSelectedDate(e.target.value)
+        // dispatch(addTimeSlot({ doctorId: doctor._id, date: e.target.value }))
+    }
     // console.log(reviews)
     // console.log(id)
     useEffect(() => {
@@ -36,10 +45,10 @@ export default function DoctorProfile() {
                         </div>
                         <div className="docDetails py-4 px-3">
                             <div className="name-box">
-                                <h3 className=' fw-bolder fs-3 mb-0' style={{ color: "#fd4169" }}>
+                                <h3 className=' fw-bolder fs-3 mb-0  text-capitalize' style={{ color: "#fd4169" }}>
                                     {doctor.name} ({doctor.degree})
                                 </h3>
-                                <span>
+                                <span className='text-capitalize fw-bold  '>
                                     {doctor.speciality}
                                 </span>
                                 <p>
@@ -47,10 +56,6 @@ export default function DoctorProfile() {
                                 </p>
                             </div>
                             <div className="rating">
-                                {
-                                    // (reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length).toFixed(1)
-                                }
-
                                 {
                                     Array.from({ length: 5 }, (_, index) => {
                                         let number = index + 0.5;
@@ -69,24 +74,24 @@ export default function DoctorProfile() {
                                         )
                                     })
                                 }
-                                { ` (${reviews.length} ${reviews.length > 1 ? 'Reviews' : 'Review'})`}
+                                {` (${reviews.length} ${reviews.length > 1 ? 'Reviews' : 'Review'})`}
 
                             </div>
                             <div className="desc">
-                                <span>Dr. Giorgos is a Urologist in ABC City and has an experience of 10 years in this field. Dr. Giorgos practices at XYZ Hospital in ABC City.</span>
+                                {/* <span> {doctor.about.slice(0, 50)} </span> */}
                             </div>
                             <div className="location-box d-flex justify-content-between pr-4">
                                 <div className="">
                                     <i className="bi bi-geo-alt-fill" style={{ color: "#fd4169" }}></i>
                                     <span>
-                                        {doctor.address}
+                                         {doctor.address}
                                     </span>
                                 </div>
                                 {/* <a className='text-decoration-none text-capitalize' href="">View map</a> */}
                             </div>
                             <div className="contact-box">
                                 <i className="bi bi-telephone-fill" style={{ color: "#fd4169" }}></i>
-                                <span>  <a className='text-decoration-none text-black-50 ' href="tel:1234567890">
+                                <span>  <a className='text-decoration-none text-black' href="tel:1234567890">
                                     {doctor.phone}
                                 </a></span>
                             </div>
@@ -98,8 +103,8 @@ export default function DoctorProfile() {
                         <div className="p-2 rounded-top" style={{ background: "#40b176" }}>
                             <nav>
                                 <div className="nav " id="nav-tab" role="tablist">
-                                    <button className="nav-link active text-white fw-bold border-end px-5 " id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
-                                        type="button" role="tab" aria-controls="nav-home" aria-selected="true">Overview</button>
+                                    <button className="nav-link active text-white fw-bold border-end px-5 text-capitalize " id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
+                                        type="button" role="tab" aria-controls="nav-home" aria-selected="true">about</button>
                                     <button className="nav-link text-white fw-bold border-end px-5" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
                                         type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Location</button>
                                     <button className="nav-link text-white fw-bold border-end px-5" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact"
@@ -110,8 +115,8 @@ export default function DoctorProfile() {
                         {/* content */}
                         <div className="tab-content p-4" id="nav-tabContent">
                             <div className="tab-pane fade show active bg-white" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                                <h5 className='fw-bolder'>Overview</h5>
-                                <p>Dr. Giorgos is a Urologist in ABC City and has an experience of 10 years in this field. Dr. Giorgos practices at XYZ Hospital in ABC City.</p>
+                                <h5 className='fw-bolder text-capitalize '>about</h5>
+                                <p>{doctor.about}</p>
                             </div>
                             <div className="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                                 <h5 className='fw-bolder'>Location</h5>
@@ -152,23 +157,14 @@ export default function DoctorProfile() {
                             <form action="">
                                 <div className="mb-3">
                                     <label htmlFor="date" className="form-label">Date :</label>
-                                    <input type="date" ref={inputRef} className="form-control" id="date" />
+                                    <input type="date" onChange={handleTimeSlots} ref={inputRef} className="form-control" id="date" />
                                 </div>
                                 <div className="mb-3">
-                                    <label htmlFor="timeSlot" className="form-label">Time Slot :</label>
-                                    <div className="d-flex gap-2 flex-wrap ">
-                                        <button className="btn border text-uppercase  ">9.00 Am </button>
-                                        <button className="btn border text-uppercase  ">9.00 Am </button>
-                                        <button className="btn border text-uppercase  ">9.00 Am </button>
-                                        <button className="btn border text-uppercase  ">9.00 Am </button>
-                                        <button className="btn border text-uppercase  ">9.00 Am </button>
-                                        <button className="btn border text-uppercase  ">9.00 Am </button>
-                                        <button className="btn border text-uppercase  ">9.00 Am </button>
-                                        <button className="btn border text-uppercase  ">9.00 Am </button>
-                                    </div>
-
+                                    {
+                                        selectedDate && <TimeSlots key={doctor._id} doctor={doctor} selectedDate={selectedDate} />
+                                    }
                                 </div>
-                                <button type="submit" className="btn text-white w-100 text-capitalize  " style={{ backgroundImage: 'linear-gradient(to right, #fc6076, #ff9a44)' }}>Book now</button>
+                                {/* <button type="submit" className="btn text-white w-100 text-capitalize  " style={{ backgroundImage: 'linear-gradient(to right, #fc6076, #ff9a44)' }}>Book now</button> */}
                             </form>
                         </div>
                     </div>
