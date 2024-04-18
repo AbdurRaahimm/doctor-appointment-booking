@@ -30,7 +30,7 @@ export default function ForgotPassword() {
                         <h1 className='text-capitalize '>Forget your password</h1>
                         <p>Enter your email</p>
                         <form onSubmit={handleForgetPassword}>
-                            <input type="email" name='email' className="form-control mb-2" id="email" placeholder="Enter Your Email" required />
+                            <input type="email" name='email' className="form-control mb-2 text-black" id="email" placeholder="Enter Your Email" required />
                             <button type="submit" className="btn border border-white text-white w-100" >Send</button>
                         </form>
                     </div>

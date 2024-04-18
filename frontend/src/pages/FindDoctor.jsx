@@ -123,11 +123,19 @@ export default function FindDoctor() {
                                     className='form-select' name="reviews" id="reviews">
                                     <option disabled>Select Reviews</option>
                                     <option value="">All</option>
-                                    <option value="1">1 Review</option>
+                                    {
+                                        // unique reviews display and first display All option to show all reviews 
+                                        [...new Set(approvedDoctors.doctors.map(doctor => doctor.reviews.length))].map(review => <option key={review} value={review} className='text-capitalize '>
+                                            {review}  {review === 1 ? 'Review' : 'Reviews'}
+                                            {/* count */}
+                                            ({approvedDoctors.doctors.filter(doctor => doctor.reviews.length === review).length})
+                                        </option>)
+                                    }
+                                    {/* <option value="1">1 Review</option>
                                     <option value="2">2 Reviews</option>
                                     <option value="3">3 Reviews</option>
                                     <option value="4">4 Reviews</option>
-                                    <option value="5">5 Reviews</option>
+                                    <option value="5">5 Reviews</option> */}
                                 </select>
                             </div>
                             <hr />

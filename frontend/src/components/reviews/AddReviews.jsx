@@ -19,7 +19,7 @@ export default function AddReviews() {
 
         const review = e.target.review.value;
         if (!review) {
-            toast.error("Please give comments")
+            toast.error("Please write some comments")
             return
         }
         // console.log(defaultRating, review, id)
