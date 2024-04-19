@@ -362,7 +362,7 @@ router.post('/book-appointment', authVerify, async (req, res) => {
                 date: req.body.date,
                 time: req.body.time
             },
-            link: `/dashboard/appointments`
+            link: `/dashboard/doctor-appointments`
         });
         await user.save();
         res.status(201).json({ message: 'Appointment booked successfully' });

@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { fetchUserById } from '../redux/userByIdSlice';
 import { getCookie } from '../utilis/getCookie';
+import useNotify from '../hooks/useNotify';
 
 export default function Notifications() {
+    const { showNotification } = useNotify();
     const navigate = useNavigate();
     const userById = useSelector(state => state.userById.userById);
     const dispatch = useDispatch();
@@ -24,7 +26,7 @@ export default function Notifications() {
             const data = await response.json();
             if (response.ok) {
                 toast.success(data.message);
-                navigate('/dashboard/notifications'); 
+                navigate('/dashboard/notifications');
                 // refresh the page
                 dispatch(fetchUserById(userById._id));
             } else {
@@ -58,6 +60,7 @@ export default function Notifications() {
             toast.error('An error occurred, please try again');
         }
     }
+
     return (
         <section>
             <h1>Notifications</h1>
@@ -75,17 +78,18 @@ export default function Notifications() {
                     <div className="tab-pane fade show active py-4" id="nav-unread" role="tabpanel" aria-labelledby="nav-unread-tab" tabIndex="0">
                         {
                             userById.unseenNotifications?.length > 0 &&
-                            <div className='d-flex justify-content-end text-decoration-underline ' style={{ cursor: "pointer" }} onClick={markAllAsRead} > Mark all as read</div>
+                            <div className='float-end text-decoration-underline ' style={{ cursor: "pointer" }} onClick={markAllAsRead} > Mark all as read</div>
                         }
-                        <div className="">
+                        <div className="mt-5">
                             {
                                 userById.unseenNotifications?.map((notification, index) => {
+                                    showNotification(notification.type, notification.message);
                                     return (
                                         <div key={index} className="card my-2" onClick={() => navigate(notification.link)} style={{ cursor: "pointer" }}>
                                             <div className="card-body">
                                                 <h5 className="card-title">{notification.type}</h5>
                                                 <p className="card-text">{notification.message}</p>
-                                                
+
                                                 {/* <a href={notification.link} className="btn btn-primary">Go somewhere</a> */}
                                             </div>
                                         </div>
@@ -97,21 +101,23 @@ export default function Notifications() {
                     <div className="tab-pane fade  active py-4" id="nav-read" role="tabpanel" aria-labelledby="nav-read-tab" tabIndex="1">
                         {
                             userById.seenNotifications?.length > 0 &&
-                            <div className='d-flex justify-content-end text-decoration-underline ' style={{ cursor: "pointer" }} onClick={deleteAll}> Delete all</div>
+                            <div className='float-end text-decoration-underline ' style={{ cursor: "pointer" }} onClick={deleteAll}> Delete all</div>
                         }
-                        {
-                            userById.seenNotifications?.map((notification, index) => {
-                                return (
-                                    <div key={index} className="card my-2" onClick={() => navigate(notification.link)} style={{ cursor: "pointer" }}>
-                                        <div className="card-body">
-                                            <h5 className="card-title">{notification.type}</h5>
-                                            <p className="card-text">{notification.message}</p>
-                                            {/* <a href={notification.link} className="btn btn-primary">Go somewhere</a> */}
+                        <div className="mt-5">
+                            {
+                                userById.seenNotifications?.map((notification, index) => {
+                                    return (
+                                        <div key={index} className="card my-2" onClick={() => navigate(notification.link)} style={{ cursor: "pointer" }}>
+                                            <div className="card-body">
+                                                <h5 className="card-title">{notification.type}</h5>
+                                                <p className="card-text">{notification.message}</p>
+                                                {/* <a href={notification.link} className="btn btn-primary">Go somewhere</a> */}
+                                            </div>
                                         </div>
-                                    </div>
-                                )
-                            })
-                        }
+                                    )
+                                })
+                            }
+                        </div>
                     </div>
                 </div>
             </div>

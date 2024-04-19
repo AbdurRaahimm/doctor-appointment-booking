@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import DoctorList from '../components/doctors/DoctorList'
 // import {toast} from 'react-toastify'
 import { fetchApprovedDoctors } from '../redux/approvedDoctorsSlice';
+import useNotify from '../hooks/useNotify';
 
 export default function FindDoctor() {
+    const { showNotification } = useNotify();
     const [state, setstate] = useState({
         username: '',
         address: '',
@@ -19,6 +21,7 @@ export default function FindDoctor() {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(fetchApprovedDoctors())
+        showNotification('Welcome', 'Find your desired doctor here!')
     }, []);
 
     return (
