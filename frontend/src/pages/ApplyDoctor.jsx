@@ -78,20 +78,20 @@ export default function ApplyDoctor() {
                                 <div className="col-md-6">
                                     <div className="form-group">
                                         <label htmlFor="name">Name</label>
-                                        <input type="text" name='name' defaultValue={userById.username} className="form-control" id="name" required />
+                                        <input type="text" name='name' defaultValue={userById.username || ''} className="form-control" id="name" required />
                                     </div>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="form-group">
                                         <label htmlFor="email">Email</label>
-                                        <input type="email" name='email' defaultValue={userById.email} className="form-control" id="email" required />
+                                        <input type="email" name='email' defaultValue={userById.email || ''} className="form-control" id="email" required />
                                     </div>
                                 </div>
 
                                 <div className="col-md-6">
                                     <div className="form-group">
                                         <label htmlFor="phone">Phone</label>
-                                        <input type="text" name="phone" defaultValue={userById.phone} className="form-control" id="phone" required />
+                                        <input type="text" name="phone" defaultValue={userById.phone || ''} className="form-control" id="phone" required />
                                     </div>
                                 </div>
                                 <div className="col-md-6">

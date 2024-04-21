@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { generateCapture } from '../utilis/generateCapture'
 import { useOTP } from '../context/OTPProvider';
 import { useDataPass } from '../context/DataPassProvider';
+import { toast } from 'react-toastify';
 
 export default function SingUp() {
   const navigate = useNavigate();
@@ -14,12 +15,12 @@ export default function SingUp() {
     const form = e.target
     // password verification
     if (form.password.value !== form.confirmPassword.value) {
-      alert('Password and Confirm Password are not the match!')
+      toast.error('Password and Confirm Password are not the match!')
       return
     }
     // capture verification
     if (form.capture.value !== form.captureVerify.value) {
-      alert('Capture and Capture Verify are not the match!')
+      toast.error('Capture and Capture Verify are not the match!')
       return
     }
     // loading
@@ -37,7 +38,7 @@ export default function SingUp() {
     }).then(
       message => {
         // if message ok alert check your email 
-        alert(`OTP Send to Your email : ${form.email.value}`)
+        toast.success(`OTP Send to Your email : ${form.email.value}`)
       }
     );
     setLoading(false)

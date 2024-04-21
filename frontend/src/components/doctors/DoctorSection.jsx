@@ -15,7 +15,7 @@ export default function DoctorSection() {
         <section className=" py-5" style={{ background: "#f7f7f9" }}>
             <div className="container">
                 <p className="text-center fw-bold" style={{ color: "#FD4169" }}>MEET OUR PROFESSIONALS</p>
-                <h2 className="text-center text-black pb-2 fw-bolder fs-1">Top Rated Specialists</h2>
+                <h2 className="text-center text-black pb-2 fw-bolder fs-1">Our Latest Doctors</h2>
                 <div className="row">
                     {
                         approvedDoctors.doctors.slice(0, 3).map(doctor => (
