@@ -15,14 +15,30 @@ router.get('/get-approved-doctors',  async (req, res) => {
 });
 
 // get-doctor-info-by-user-id 
-router.get('/get-doctor-info-by-user-id', authVerify,  async (req, res) => {
+router.get('/get-doctor-info-by-user-id/:id', authVerify,  async (req, res) => {
     try {
-        const doctor = await Doctor.findOne({ userId: req.body.userId });
+        const doctor = await Doctor.findOne({ userId: req.params.id });
         res.status(200).json(doctor);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 });
+
+// update-doctor-info
+router.put('/update-doctor-info', authVerify, async (req, res) => {
+    try {
+        const doctor = await Doctor.findOne({ userId: req.body.userId });
+        if (!doctor) {
+            throw new Error('Doctor not found');
+        }
+        await Doctor.findByIdAndUpdate(doctor._id, req.body);
+        res.status(200).json({ message: 'Doctor info updated successfully' });
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 
 // get-doctor-info-by-doctor-id
 router.post('/get-doctor-info-by-doctor-id', authVerify, async (req, res) => {

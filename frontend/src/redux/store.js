@@ -7,12 +7,14 @@ import reviewsSlice from './reviewsSlice';
 import timeSlotSlice from './timeSlotSlice';
 import doctorAppointmentsSlice from './doctorAppointmentsSlice';
 import userAppointmentsSlice from './userAppointmentsSlice';
+import doctorByIdSlice from './doctorByIdSlice';
 
 const store = configureStore({
     reducer: {
         user: userSlice,
         userById: userByIdSlice,
         doctor: doctorSlice,
+        doctorById: doctorByIdSlice,
         approvedDoctors: approvedDoctorsSlice,
         reviews: reviewsSlice,
         timeSlots: timeSlotSlice,

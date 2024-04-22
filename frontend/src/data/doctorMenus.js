@@ -2,7 +2,7 @@ export const doctorMenus = [
     {
         id: 1,
         name: "Profile",
-        // path: "/doctor-profile",
+        path: "doctor-profile",
         icon: "bi bi-person",
     },
     {

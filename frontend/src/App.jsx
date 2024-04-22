@@ -23,6 +23,7 @@ import DoctorProfile from "./pages/doctor/DoctorProfile";
 import ResetPassword from "./pages/ResetPassword";
 import DoctorAppointments from "./pages/DoctorAppointments";
 import UserAppointment from "./pages/UserAppointment";
+import DoctorInfo from "./pages/DoctorInfo";
 
 
 
@@ -38,6 +39,7 @@ const router = createBrowserRouter(
         <Route path="doctor-profile/:id" element={<DoctorProfile />} />
         <Route path="dashboard" element={<DashboardLayout />} errorElement={<ErrorPage />}>
           <Route index  element={<ProtectRoutes> <Profile /></ProtectRoutes>} />
+          <Route path="doctor-profile"  element={<ProtectRoutes> <DoctorInfo /></ProtectRoutes>} />
           <Route path="user-list" element={<ProtectRoutes><UsersList /></ProtectRoutes>} />
           <Route path="doctor-list" element={<ProtectRoutes><DoctorsList /></ProtectRoutes>} />
           <Route path="apply-doctor" element={<ProtectRoutes><ApplyDoctor /></ProtectRoutes>} />
