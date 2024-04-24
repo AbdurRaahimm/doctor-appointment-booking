@@ -14,6 +14,7 @@ app.use(cors({
         "http://localhost:4173",
         "http://localhost:5174",
         "http://localhost:5175",
+        "https://doctor-appointment-frontend-nine.vercel.app",
     ],
     credentials: true,
 }
