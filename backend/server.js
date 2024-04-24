@@ -32,7 +32,7 @@ app.use('/api/doctor', require('./routes/doctorRoutes'));
 
 
 
-app.get('/', authVerify, (req, res) => {
+app.get('/',  (req, res) => {
     res.send('Backend Server working!');
 });
 
