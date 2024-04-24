@@ -11,8 +11,6 @@ const port = 3000;
 app.use(cors({
     origin: [
         "https://doctor-appointment-frontend-nine.vercel.app",
-        "http://localhost:5173",
-        "http://localhost:4173",
     ],
     methods: [
         "GET", 
