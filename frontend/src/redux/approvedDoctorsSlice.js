@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 
 export const fetchApprovedDoctors  = createAsyncThunk("fetchApprovedDoctors", async () => {
-    const response = await fetch("http://localhost:3000/api/doctor/get-approved-doctors" , {
+    const response = await fetch("https://doctor-appointment-backend-one.vercel.app/api/doctor/get-approved-doctors" , {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

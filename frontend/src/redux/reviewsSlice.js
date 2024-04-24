@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const fetchReviews = createAsyncThunk("fetchReviews", async (id) => {
-    const response = await fetch(`http://localhost:3000/api/user/get-reviews/${id}`);
+    const response = await fetch(`https://doctor-appointment-backend-one.vercel.app/api/user/get-reviews/${id}`);
     if (!response.ok) {
         throw new Error('Server error');
     }

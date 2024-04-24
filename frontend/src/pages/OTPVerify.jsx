@@ -33,7 +33,7 @@ export default function OTPVerify() {
         })
         if (userOtp === otp) {
             setLoading(true)
-            const response = await fetch('http://localhost:3000/api/user/register', {
+            const response = await fetch('https://doctor-appointment-backend-one.vercel.app/api/user/register', {
                 method: 'POST',
                 body: data
             })

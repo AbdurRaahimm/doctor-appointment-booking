@@ -4,7 +4,7 @@ import { getCookie } from "../utilis/getCookie";
 const token = getCookie("token");
 
 export const getDoctorById = createAsyncThunk("getDoctorById", async (userId) => {
-    const response = await fetch(`http://localhost:3000/api/doctor/get-doctor-info-by-user-id/${userId}`, {
+    const response = await fetch(`https://doctor-appointment-backend-one.vercel.app/api/doctor/get-doctor-info-by-user-id/${userId}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -21,7 +21,7 @@ export const getDoctorById = createAsyncThunk("getDoctorById", async (userId) =>
 
 // update-doctor-info  
 export const updateDoctorInfo = createAsyncThunk("updateDoctorInfo", async (doctor) => {
-    const response = await fetch("http://localhost:3000/api/doctor/update-doctor-info", {
+    const response = await fetch("https://doctor-appointment-backend-one.vercel.app/api/doctor/update-doctor-info", {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',

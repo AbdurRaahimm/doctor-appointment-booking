@@ -25,7 +25,7 @@ export default function ApplyDoctor() {
         // formData.append('userId', userId); // Append userId to form data
         setLoading(true);
         try {
-            const response = await fetch('http://localhost:3000/api/user/apply-doctor', {
+            const response = await fetch('https://doctor-appointment-backend-one.vercel.app/api/user/apply-doctor', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

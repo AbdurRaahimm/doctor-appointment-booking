@@ -10,7 +10,7 @@ export const fetchTimeSlots = createAsyncThunk("fetchTimeSlots", async () => {
 
 export const addTimeSlot = createAsyncThunk("addTimeSlot", async (data) => {
 
-    const response = await fetch("http://localhost:3000/api/user/check-time-slot", {
+    const response = await fetch("https://doctor-appointment-backend-one.vercel.app/api/user/check-time-slot", {
         method: "POST",
         headers: {
             "Content-type": "application/json",

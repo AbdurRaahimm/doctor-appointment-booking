@@ -39,7 +39,7 @@ export default function NavBar() {
         <nav className="navbar navbar-expand-lg navbar-light bg-white shadow sticky-top">
             <div className="container-fluid">
                 <Link className="navbar-brand" to="/">
-                    <img  width={48} className=" " src="https:abdurraahimm.github.io/capstone/img/logo/logo.png" alt="" />
+                    <img  width={48} className=" " src="https://abdurraahimm.github.io/capstone/img/logo/logo.png" alt="" />
                     <span className="fw-bold text-capitalize ">Dr. appointment</span>
                 </Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
