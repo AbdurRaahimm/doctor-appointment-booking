@@ -16,7 +16,7 @@ export default function Notifications() {
     const markAllAsRead = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`https://doctor-appointment-backend-one.vercel.app/api/user/mark-all-as-read/${userById._id}`, {
+            const response = await fetch(`https://doctor-appointment-backend-3uugd79z1.vercel.app/api/user/mark-all-as-read/${userById._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ export default function Notifications() {
     const deleteAll = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`https://doctor-appointment-backend-one.vercel.app/api/user/delete-all-notifications/${userById._id}`, {
+            const response = await fetch(`https://doctor-appointment-backend-3uugd79z1.vercel.app/api/user/delete-all-notifications/${userById._id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

@@ -4,7 +4,7 @@ import {toast} from 'react-toastify'
 export default function ForgotPassword() {
     const handleForgetPassword = async (e) => {
         e.preventDefault();
-        const response = await fetch('https://doctor-appointment-backend-one.vercel.app/api/user/forgot-password', {
+        const response = await fetch('https://doctor-appointment-backend-3uugd79z1.vercel.app/api/user/forgot-password', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

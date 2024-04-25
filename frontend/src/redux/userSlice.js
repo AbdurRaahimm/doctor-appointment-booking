@@ -5,7 +5,7 @@ const token = getCookie("token");
 
 
 export const fetchUsers  = createAsyncThunk("fetchUsers", async () => {
-    const response = await fetch("https://doctor-appointment-backend-one.vercel.app/api/user/get-users" , {
+    const response = await fetch("https://doctor-appointment-backend-3uugd79z1.vercel.app/api/user/get-users" , {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -20,7 +20,7 @@ export const fetchUsers  = createAsyncThunk("fetchUsers", async () => {
 
 // user delete 
 export const deleteUser = createAsyncThunk("deleteUser", async (id) => {
-    const response = await fetch(`https://doctor-appointment-backend-one.vercel.app/api/user/delete-user/${id}`, {
+    const response = await fetch(`https://doctor-appointment-backend-3uugd79z1.vercel.app/api/user/delete-user/${id}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',

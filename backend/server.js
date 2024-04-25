@@ -10,15 +10,10 @@ const port = 3000;
 
 app.use(cors({
     origin: [
-        "https://doctor-appointment-frontend-nine.vercel.app",
+        "https://doctor-appointment-frontend-nine.vercel.app", 
+        "http://localhost:5173",
     ],
-    methods: [
-        "GET", 
-        "POST",
-        "PUT",
-        "DELETE"
-
-    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
 }
 ));
@@ -35,7 +30,7 @@ app.use('/api/doctor', require('./routes/doctorRoutes'));
 
 
 
-app.get('/',  (req, res) => {
+app.get('/', (req, res) => {
     res.send('Backend Server working!');
 });
 

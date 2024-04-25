@@ -19,7 +19,7 @@ export default function UserList() {
   const handleUserDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this user?')) {
       try {
-        const response = await fetch(`https://doctor-appointment-backend-one.vercel.app/api/user/delete-user/${id}`, {
+        const response = await fetch(`https://doctor-appointment-backend-3uugd79z1.vercel.app/api/user/delete-user/${id}`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',

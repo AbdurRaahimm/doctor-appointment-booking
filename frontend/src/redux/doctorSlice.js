@@ -4,7 +4,7 @@ import { getCookie } from "../utilis/getCookie";
 const token = getCookie("token");
 
 export const fetchDoctors  = createAsyncThunk("fetchDoctors", async () => {
-    const response = await fetch("https://doctor-appointment-backend-one.vercel.app/api/admin/get-doctors" , {
+    const response = await fetch("https://doctor-appointment-backend-3uugd79z1.vercel.app/api/admin/get-doctors" , {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

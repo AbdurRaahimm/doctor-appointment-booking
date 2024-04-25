@@ -18,7 +18,7 @@ export default function DoctorList() {
 
   const handleApprovedDoctor = async (doctorId) => {
     console.log(doctorId);
-    const response = await fetch(`https://doctor-appointment-backend-one.vercel.app/api/admin/approve-doctor/${doctorId}`, {
+    const response = await fetch(`https://doctor-appointment-backend-3uugd79z1.vercel.app/api/admin/approve-doctor/${doctorId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ export default function DoctorList() {
 
   const handleBlockedDoctor = async (doctorId) => {
     // console.log(doctorId);
-    const response = await fetch(`https://doctor-appointment-backend-one.vercel.app/api/admin/block-doctor/${doctorId}`, {
+    const response = await fetch(`https://doctor-appointment-backend-3uugd79z1.vercel.app/api/admin/block-doctor/${doctorId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ export default function DoctorList() {
 
   const handleUnblockedDoctor = async (doctorId) => {
     // console.log(doctorId);
-    const response = await fetch(`https://doctor-appointment-backend-one.vercel.app/api/admin/unblock-doctor/${doctorId}`, {
+    const response = await fetch(`https://doctor-appointment-backend-3uugd79z1.vercel.app/api/admin/unblock-doctor/${doctorId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

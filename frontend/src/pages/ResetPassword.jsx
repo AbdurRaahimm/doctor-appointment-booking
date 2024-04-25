@@ -11,7 +11,7 @@ const { token } = useParams();
         if (e.target.password.value !== e.target.confirmPassword.value) {
             return toast.error('Passwords do not match! Please try again.');
         }
-        const response = await fetch(`https://doctor-appointment-backend-one.vercel.app/api/user/reset-password/${token}`, {
+        const response = await fetch(`https://doctor-appointment-backend-3uugd79z1.vercel.app/api/user/reset-password/${token}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

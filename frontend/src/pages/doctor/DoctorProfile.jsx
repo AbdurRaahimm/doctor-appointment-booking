@@ -41,7 +41,7 @@ export default function DoctorProfile() {
                     <div className="docProfile bg-white shadow rounded d-flex">
                         <div className="docImg">
                             {/* <img className='p-4 rounded-5 h-100 w-100' src="https://demo.freaktemplate.com/bookappointment/public/upload/doctors/6.jpg" alt="Doctor" /> */}
-                            <img width={220} className='p-4 rounded-5' src={`https://doctor-appointment-backend-one.vercel.app/${doctor.image}`} alt="Doctor" />
+                            <img width={220} className='p-4 rounded-5' src={`https://doctor-appointment-backend-3uugd79z1.vercel.app/${doctor.image}`} alt="Doctor" />
                         </div>
                         <div className="docDetails py-4 px-3">
                             <div className="name-box">

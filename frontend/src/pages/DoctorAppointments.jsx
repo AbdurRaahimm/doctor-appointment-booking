@@ -16,7 +16,7 @@ export default function DoctorAppointments() {
     dispatch(fetchDoctorAppointments(user._id))
   }, [])
   const handleApproved = async (id) => {
-    const res = await fetch(`https://doctor-appointment-backend-one.vercel.app/api/doctor/approve-appointment/${id}`, {
+    const res = await fetch(`https://doctor-appointment-backend-3uugd79z1.vercel.app/api/doctor/approve-appointment/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ export default function DoctorAppointments() {
     }
   };
   const handleRejected = async (id) => {
-    const res = await fetch(`https://doctor-appointment-backend-one.vercel.app/api/doctor/reject-appointment/${id}`, {
+    const res = await fetch(`https://doctor-appointment-backend-3uugd79z1.vercel.app/api/doctor/reject-appointment/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
