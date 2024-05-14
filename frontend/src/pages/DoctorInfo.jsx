@@ -5,11 +5,16 @@ import { getDoctorById, updateDoctorInfo } from '../redux/doctorByIdSlice';
 
 export default function DoctorInfo() {
     const user = JSON.parse(localStorage.getItem('user')) || [];
-    const {doctor, loading, error} = useSelector(state => state.doctorById);
+    const { doctor, loading, error } = useSelector(state => state.doctorById);
     // console.log(doctor);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getDoctorById(user._id));
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => {
+                console.error(error);
+            });
     }, [])
     const handleUpdateDoctorInfo = async (e) => {
         e.preventDefault();
@@ -35,7 +40,7 @@ export default function DoctorInfo() {
             toast.success('Doctor info updated successfully');
         }
         catch (error) {
-           toast.error(error.message);
+            toast.error(error.message);
         }
     }
     return (
@@ -53,13 +58,13 @@ export default function DoctorInfo() {
                                 <div className="col-md-6">
                                     <div className="form-group">
                                         <label htmlFor="name">Name</label>
-                                        <input type="text" name='name' defaultValue={ doctor.name || ''} className="form-control" id="name" required />
+                                        <input type="text" name='name' defaultValue={doctor.name || ''} className="form-control" id="name" required />
                                     </div>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="form-group">
                                         <label htmlFor="email">Email</label>
-                                        <input type="email" name='email' defaultValue={ doctor.email ||''} className="form-control" id="email" required />
+                                        <input type="email" name='email' defaultValue={doctor.email || ''} className="form-control" id="email" required />
                                     </div>
                                 </div>
 
@@ -79,7 +84,7 @@ export default function DoctorInfo() {
                                 <div className="col-md-12">
                                     <div className="form-group">
                                         <label htmlFor="about">Say about yourself</label>
-                                        <textarea name="about" className="form-control" id="about" defaultValue={doctor.about || ''} required />
+                                        <textarea name="about" className="form-control" id="editor" defaultValue={doctor.about || ''} required />
                                     </div>
                                 </div>
                                 <hr className='mt-4' />
@@ -88,7 +93,7 @@ export default function DoctorInfo() {
                                     <div className="form-group">
                                         <label htmlFor="speciality">Speciality</label>
                                         <select className="form-select" name="speciality" id="speciality">
-                                            <option value={doctor.speciality}>{doctor.speciality}</option>                   
+                                            <option value={doctor.speciality}>{doctor.speciality}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -136,7 +141,7 @@ export default function DoctorInfo() {
                                         <span className="visually-hidden">Loading...</span>
                                     </div> : 'Update Info'
                                 }
-                                
+
                             </button>
                         </form>
                     </div>

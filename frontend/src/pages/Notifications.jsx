@@ -82,14 +82,13 @@ export default function Notifications() {
                         }
                         <div className="mt-5">
                             {
-                                userById.unseenNotifications?.map((notification, index) => {
-                                    showNotification(notification.type, notification.message);
+                                // reverse and map the array to show the latest notification first
+                                userById.unseenNotifications?.toReversed().map((notification, index) => {
                                     return (
                                         <div key={index} className="card my-2" onClick={() => navigate(notification.link)} style={{ cursor: "pointer" }}>
                                             <div className="card-body">
                                                 <h5 className="card-title">{notification.type}</h5>
                                                 <p className="card-text">{notification.message}</p>
-
                                                 {/* <a href={notification.link} className="btn btn-primary">Go somewhere</a> */}
                                             </div>
                                         </div>

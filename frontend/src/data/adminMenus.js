@@ -1,6 +1,12 @@
 
 export const adminMenus = [
     {
+        id:1,
+        name: "Dashboard",
+        path: "admin-dashboard",
+        icon: "bi bi-speedometer2",
+    },
+    {
         id: 1,
         name: "Profile",
         // path: `admin-profile`,

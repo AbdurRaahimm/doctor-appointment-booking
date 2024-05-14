@@ -8,7 +8,7 @@ import AddReviews from '../../components/reviews/AddReviews';
 import { getCookie } from '../../utilis/getCookie';
 import { fetchReviews } from '../../redux/reviewsSlice';
 import TimeSlots from '../../components/TimeSlots';
-import { addTimeSlot } from '../../redux/timeSlotSlice';
+
 
 
 export default function DoctorProfile() {
@@ -41,19 +41,18 @@ export default function DoctorProfile() {
                     <div className="docProfile bg-white shadow rounded d-flex">
                         <div className="docImg">
                             {/* <img className='p-4 rounded-5 h-100 w-100' src="https://demo.freaktemplate.com/bookappointment/public/upload/doctors/6.jpg" alt="Doctor" /> */}
-                            <img width={220} className='p-4 rounded-5' src={`http://localhost:3000/${doctor.image}`} alt="Doctor" />
+                            <img width={220} className='p-4 rounded-5' src={doctor.image} alt="Doctor" />
                         </div>
                         <div className="docDetails py-4 px-3">
                             <div className="name-box">
-                                <h3 className=' fw-bolder fs-3 mb-0  text-capitalize' style={{ color: "#fd4169" }}>
-                                    {doctor.name} ({doctor.degree})
+                                <h3 className=' fw-bolder fs-3 text-capitalize' style={{ color: "#fd4169" }}>
+                                    {doctor.name} 
                                 </h3>
+                                <p>{doctor.degree}</p>
                                 <span className='text-capitalize fw-bold  '>
                                     {doctor.speciality}
                                 </span>
-                                <p>
-                                    {doctor.experience} years of experience
-                                </p>
+                                
                             </div>
                             <div className="rating">
                                 {
@@ -116,7 +115,10 @@ export default function DoctorProfile() {
                         <div className="tab-content p-4" id="nav-tabContent">
                             <div className="tab-pane fade show active bg-white" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                                 <h5 className='fw-bolder text-capitalize '>about</h5>
-                                <p>{doctor.about}</p>
+                                <p>
+                                    {doctor.experience} years of experience
+                                </p>
+                                <div dangerouslySetInnerHTML={{  __html: doctor.about  }}/>
                             </div>
                             <div className="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                                 <h5 className='fw-bolder'>Location</h5>

@@ -2,48 +2,64 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useOTP } from '../context/OTPProvider';
 import { useDataPass } from '../context/DataPassProvider';
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify'
+
 
 export default function OTPVerify() {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const otp = useOTP();
     const { data } = useDataPass();
-    // console.log(data)
+    console.log(
+        data.get('username'),
+        data.get('email'),
+        data.get('password'),
+        data.get('phone'),
+        data.get('gender'),
+        data.get('profile'),
+    )
     const handleInput = (e) => {
         if (e.target.value.length === 1) {
             if (e.target.nextElementSibling) {
-                e.target.nextElementSibling.focus()
+                e.target.nextElementSibling.focus();
                 document.querySelector('button').disabled = false;
             }
         } else {
             if (e.target.previousElementSibling) {
-                e.target.previousElementSibling.focus()
+                e.target.previousElementSibling.focus();
                 document.querySelector('button').disabled = true;
             }
         }
     };
     const handleVerify = async (e) => {
         e.preventDefault();
+
         // match otp 
         const form = e.target
         let userOtp = ''
         form.querySelectorAll('input').forEach(input => {
             userOtp += input.value
         })
-        if (userOtp === otp) {
+        if (userOtp === otp) { // if otp match
             setLoading(true)
-            const response = await fetch('http://localhost:3000/api/user/register', {
-                method: 'POST',
-                body: data
-            })
-            const dataa = await response.json()
-            if (response.ok) {
-                toast.success(dataa.message)
-                navigate('/signin')
-            } else {
-                toast.error(dataa.message)
+            try {
+                const res = await fetch('http://localhost:3000/api/user/register', {
+                    method: 'POST',                   
+                    body: data,
+                })
+                const result = await res.json();
+                if(res.ok){
+                    setLoading(false)
+                    toast.success(result.message)
+                    navigate('/signin')
+                }
+                else{
+                    setLoading(false)
+                    toast.error(result.message)
+                }
+            } catch (error) {
                 setLoading(false)
+                toast.error(error.message)
             }
         } else {
             alert('OTP not match! Try again.',)

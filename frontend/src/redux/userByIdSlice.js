@@ -8,7 +8,6 @@ export const fetchUserById  = createAsyncThunk("fetchUserById", async (id) => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
         }
     });
     if (!response.ok) {

@@ -21,7 +21,7 @@ export default function Sidebar() {
                 <div className="">
                    {/* center image */} 
                    {/* <img width={130} src={`http://localhost:3000/${userById.image}`} alt="profile" className="img-fluid rounded-circle  mx-auto   " /> */}
-                    <img src={`http://localhost:3000/${userById.image}`} alt="user" className="rounded-circle mx-auto d-block" width={130} />
+                    <img src={user.image.url} alt="user" className="rounded-circle mx-auto d-block" width={130} />
                     <h5 className='text-center text-capitalize'>
                         {userById.username} ({
                             userById.isDoctor ? 'Doctor' : userById.isAdmin ? 'Admin' : 'User'

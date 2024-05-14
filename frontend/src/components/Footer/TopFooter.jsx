@@ -31,7 +31,7 @@ export default function TopFooter() {
                         <ul className=" list-group-flush " style={{ paddingLeft: "0px" }}>
                             <li className="list-group-item ">
                                 <i className="bi bi-geo-alt-fill"></i>
-                                <span className="text-white"> 123, New York, USA</span>
+                                <span className="text-white"> 123, Dhaka, Bangladesh</span>
                             </li>
                             <li className="list-group-item ">
                                 <i className="bi bi-telephone-fill"></i>

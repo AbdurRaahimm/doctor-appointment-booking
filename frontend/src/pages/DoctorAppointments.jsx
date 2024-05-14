@@ -29,7 +29,7 @@ export default function DoctorAppointments() {
     }
     else {
       toast.success(data.message)
-      dispatch(fetchDoctorAppointments(userById._id))
+      dispatch(fetchDoctorAppointments(user._id))
     }
   };
   const handleRejected = async (id) => {
@@ -46,7 +46,7 @@ export default function DoctorAppointments() {
     }
     else {
       toast.success(data.message)
-      dispatch(fetchDoctorAppointments(userById._id))
+      dispatch(fetchDoctorAppointments(user._id))
     }
   };
   return (
@@ -67,14 +67,17 @@ export default function DoctorAppointments() {
       </div>
 
       <div className='table-responsive'>
-        <table className='table table-striped table-hover'>
+        <table className='table table-striped table-bordered table-hover text-center'>
           <thead>
             <tr>
+            <th> image</th>
               <th> Name</th>
               <th>Email</th>
               <th>Phone</th>
               <th> Date</th>
               <th> Time</th>
+              <th> Symptom </th>
+              <th> Report </th>
               <th>Status</th>
               <th>Action</th>
             </tr>
@@ -110,17 +113,27 @@ export default function DoctorAppointments() {
                     .filter(appointment => appointment.userInfo.username.toLowerCase().includes(search.toLowerCase()) || appointment.userInfo.phone.includes(search))
                     .map(appointment => (
                       <tr key={appointment._id}>
+                        <td> <img src={appointment.userInfo.image.url} alt={appointment.userInfo.username} width='40' height='40' className='rounded-circle' /> </td>
                         <td>{appointment.userInfo.username}</td>
                         <td>{appointment.userInfo.email}</td>
                         <td>{appointment.userInfo.phone}</td>
                         <td>{new Date(appointment.date).toLocaleDateString()}</td>
-                        <td>{appointment.time}</td>
-                        <td> <span className={`badge ${appointment.status === 'approved' ? 'bg-success' : 'bg-danger'}`}>{appointment.status}</span> </td>
+                        <td>{appointment.time}</td> 
+                        <td>{appointment.symptoms}</td>
                         <td>
+                          {
+                          //  image url is empty then show no report else show the image
+                          appointment.image.url ? 
+                          <a href={appointment.image.url} target='_blank' rel='noreferrer' className='btn btn-sm btn-primary'>View </a> : 
+                          <span className='text-muted'>No Report</span>
+                          }
+                        </td>
+                        <td> <span className={`badge ${appointment.status === 'approved' ? 'bg-success' : 'bg-danger'}`}>{appointment.status}</span> </td>
+                        <td className='d-flex gap-1'>
                           {
                             appointment.status === 'pending' ?
                               <>
-                                <button onClick={() => handleApproved(appointment._id)} className='btn btn-sm btn-success me-2'>Approve</button>
+                                <button onClick={() => handleApproved(appointment._id)} className='btn btn-sm btn-success '>Approve</button>
                                 <button onClick={() => handleRejected(appointment._id)} className='btn btn-sm btn-danger'>Reject</button>
                               </> :
                               <span className='text-muted'>Approved</span>

@@ -46,7 +46,7 @@ export default function TopBar() {
                         </div>
                     ) : (
                         <div className="topbar-right-item m-2">
-                            <Link to="/signin" className="text-white text-decoration-none">Sign In</Link>
+                            <Link to="/signin" className="text-white text-decoration-none border rounded px-2 py-1">Sign In / Sign Up</Link>
                         </div>
                     )
                 }

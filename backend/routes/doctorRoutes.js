@@ -86,7 +86,18 @@ router.put('/approve-appointment/:id', authVerify, async (req, res) => {
         await user.save();
         res.status(200).json({ message: 'Appointment approved successfully', appointment });
     } catch (error) {
-        res.status(500).json({ message: ' Error Approving appointment ' });
+        res.status(500).json({ message: ' Error Approving appointment ',
+            error: error.message});
+    }
+});
+
+// appointments-by-doctor-id 
+router.get('/check-appointments-by-doctor-slots/:id',  async (req, res) => {
+    try {
+       const appointments = await Appointments.find({ doctorId: req.params.id, status: 'approved'});
+         res.status(200).json(appointments);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 });
 

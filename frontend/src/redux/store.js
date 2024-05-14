@@ -8,6 +8,7 @@ import timeSlotSlice from './timeSlotSlice';
 import doctorAppointmentsSlice from './doctorAppointmentsSlice';
 import userAppointmentsSlice from './userAppointmentsSlice';
 import doctorByIdSlice from './doctorByIdSlice';
+import appointmentSlice from './appointmentSlice';
 
 const store = configureStore({
     reducer: {
@@ -19,7 +20,8 @@ const store = configureStore({
         reviews: reviewsSlice,
         timeSlots: timeSlotSlice,
         doctorAppointments: doctorAppointmentsSlice,
-        userAppointments: userAppointmentsSlice
+        userAppointments: userAppointmentsSlice,
+        slotsCheckAppointments: appointmentSlice
     }
 })
 

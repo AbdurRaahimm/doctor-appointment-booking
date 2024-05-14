@@ -7,52 +7,63 @@ const multer = require('multer');
 const nodemailer = require('nodemailer');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const moment = require("moment");
+const cloudinary = require('../utils/cloudinary');
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads/');
+
+const upload = multer({
+    storage: multer.diskStorage({}),
+    limits: {
+        fileSize: 5 * 1024 * 1024, // 5MB
     },
-    filename: (req, file, cb) => {
-        cb(null, file.originalname);
+    fileFilter(req, file, cb) {
+        if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+            return cb(new Error('Please upload an image'));
+        }
+        cb(undefined, true);
     }
 });
 
-const upload = multer({ storage: storage });
-
 // user register
-router.post('/register', upload.single('profileImg'), async (req, res) => {
+router.post('/register',upload.single('profile'), async (req, res) => {
+    console.log(req.body);
     try {
         // Check if the user already exists
         const userExists = await User.findOne({ email: req.body.email });
         if (userExists) {
             throw new Error('User already exists');
         }
-
-        // Check if file upload was successful
-        if (!req.file || !req.file.filename) {
-            throw new Error('Image upload failed');
-        }
+        console.log(req.file);
+        // image upload
+        const filePath = req.file.path;
+        const result = await cloudinary.uploader.upload(filePath, {
+            folder: 'users',
+            width: 500,
+            crop: 'scale'
+        });
 
         // password validation
         if (req.body.password.length < 6) {
             throw new Error('Password must be at least 6 characters long');
         }
-       
+
         // Hash the password 
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(req.body.password, salt);
-        req.body.password = hashedPassword;
 
-        // // image url 
-        req.body.image = req.file.filename;
         // Create a new user
-        const newUser = new User(req.body);
+        const newUser = new User({
+            ...req.body,
+            password: hashedPassword,
+            image: {
+                url: result.secure_url,
+                public_id: result.public_id
+            }
+        });
         await newUser.save();
         res.status(201).json({ message: 'User created successfully' });
 
     } catch (error) {
-        res.status(400).json({ message: error.message });
+        res.status(500).json({ message: error.message });
     }
 });
 
@@ -102,7 +113,7 @@ router.post('/forgot-password', async (req, res) => {
         if (!user) {
             throw new Error('User does not exist');
         }
-        
+
         // Generate a token
         const Token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '30m' });
 
@@ -182,7 +193,7 @@ router.get('/get-users', authVerify, async (req, res) => {
 });
 
 // get user by id
-router.get('/get-user/:id', authVerify, async (req, res) => {
+router.get('/get-user/:id', async (req, res) => {
     try {
         const user = await User.findById(req.params.id, { password: 0 });
         res.status(200).json(user);
@@ -228,15 +239,15 @@ router.post('/apply-doctor', authVerify, async (req, res) => {
         }
 
         // Create a new doctor
-        const newDoctor = new Doctor({ ...req.body, status: 'pending'});
+        const newDoctor = new Doctor({ ...req.body, status: 'pending' });
         await newDoctor.save();
-        const adminUser = await User.findOne({ isAdmin: true }); 
+        const adminUser = await User.findOne({ isAdmin: true });
 
         const unseenNotifications = adminUser.unseenNotifications;
         unseenNotifications.push({
             type: 'New doctor application',
             message: `${newDoctor.name} has applied for a doctor account`,
-            data:{
+            data: {
                 doctorId: newDoctor._id,
                 doctorName: newDoctor.name
             },
@@ -338,7 +349,7 @@ router.post('/check-time-slot', async (req, res) => {
             throw new Error('Doctor not found');
         }
         const appointments = await Appointments.find({ doctorId: req.body.doctorId, date: req.body.date });
-        const timeSlots = []; 
+        const timeSlots = [];
         res.status(200).json({ message: 'Time slot checked successfully', timeSlots });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -347,9 +358,43 @@ router.post('/check-time-slot', async (req, res) => {
 
 // book appointment 
 router.post('/book-appointment', authVerify, async (req, res) => {
+    // console.log(req.body);
     try {
-        const newAppointment = new Appointments({...req.body, status: 'pending'});
+        // Check if the appointment already exists with approved status
+        const appointmentExists = await Appointments.findOne({
+            userId: req.body.userInfo._id,
+            doctorId: req.body.doctorInfo._id,
+            date: req.body.date,
+            time: req.body.time,
+            status: 'approved'
+        });
+        if (appointmentExists) {
+            throw new Error('Appointment already exists');
+        }
+
+        let result = { secure_url: '', public_id: '' };
+        if (req.body.fileAttach) {
+            const filePath = req.body.fileAttach;
+            result = await cloudinary.uploader.upload(filePath, {
+                folder: 'reports',
+            });
+        }
+
+        // console.log(req.body.fileAttach);
+
+        // Create a new appointment
+        const newAppointment = new Appointments({
+            ...req.body,
+            image: {
+                url: result.secure_url,
+                public_id: result.public_id
+            },
+            status: 'pending'
+        });
+        console.log(newAppointment);
         await newAppointment.save();
+
+        // Update doctor's unseen notifications
         const user = await User.findOne({ _id: req.body.doctorInfo.userId });
         const unseenNotifications = user.unseenNotifications;
         unseenNotifications.push({
@@ -365,11 +410,15 @@ router.post('/book-appointment', authVerify, async (req, res) => {
             link: `/dashboard/doctor-appointments`
         });
         await user.save();
+
+        // Send success response
         res.status(201).json({ message: 'Appointment booked successfully' });
     } catch (error) {
+        // Handle errors
         res.status(500).json({ message: 'Error booking appointment', error: error.message });
     }
 });
+
 
 // get appointments by user id 
 router.get('/get-appointments/:id', authVerify, async (req, res) => {

@@ -26,8 +26,9 @@ export default function SingUp() {
     // loading
     setLoading(true)
     // form data
-    const formData = new FormData(form)  
-    setData(formData) 
+    const formData = new FormData(form)
+    // set data to context
+    setData(formData)
     // send otp to email
     Email.send({
       SecureToken: import.meta.env.VITE_SECURE_TOKEN,
@@ -106,14 +107,14 @@ export default function SingUp() {
               {/* Profile */}
               <div className="form-group mb-3">
                 <label htmlFor="images">Profile</label>
-                <input type="file" name='profileImg' className="form-control" id="images" required />
+                <input type="file" name='profile' className="form-control" id="images" required />
               </div>
 
               <button type="submit" className="btn w-100 text-white " style={{ backgroundImage: 'linear-gradient(to right, #fc6076, #ff9a44)' }}>
                 {loading ? <div className="spinner-border text-light" role="status">
                   <span className="visually-hidden">Loading...</span>
                 </div> : 'Sign Up'}
-                
+
               </button>
             </form>
           </div>

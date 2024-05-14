@@ -24,6 +24,10 @@ import ResetPassword from "./pages/ResetPassword";
 import DoctorAppointments from "./pages/DoctorAppointments";
 import UserAppointment from "./pages/UserAppointment";
 import DoctorInfo from "./pages/DoctorInfo";
+import BookAppointment from "./pages/BookAppointment";
+import DoctorDashboard from "./pages/DoctorDashboard";
+import DoctorPatients from "./pages/DoctorPatients";
+import AdminDashboard from "./pages/admin/AdminDashboard";
 
 
 
@@ -37,15 +41,19 @@ const router = createBrowserRouter(
         <Route path="about" element={<About />} />
         <Route path="find-doctor" element={<FindDoctor />} />
         <Route path="doctor-profile/:id" element={<DoctorProfile />} />
+        
         <Route path="dashboard" element={<DashboardLayout />} errorElement={<ErrorPage />}>
-          <Route index  element={<ProtectRoutes> <Profile /></ProtectRoutes>} />
-          <Route path="doctor-profile"  element={<ProtectRoutes> <DoctorInfo /></ProtectRoutes>} />
+          <Route index element={<ProtectRoutes> <Profile /></ProtectRoutes>} />
+          <Route path="doctor-profile" element={<ProtectRoutes> <DoctorInfo /></ProtectRoutes>} />
           <Route path="user-list" element={<ProtectRoutes><UsersList /></ProtectRoutes>} />
           <Route path="doctor-list" element={<ProtectRoutes><DoctorsList /></ProtectRoutes>} />
           <Route path="apply-doctor" element={<ProtectRoutes><ApplyDoctor /></ProtectRoutes>} />
           <Route path="notifications" element={<ProtectRoutes><Notifications /></ProtectRoutes>} />
           <Route path="doctor-appointments" element={<ProtectRoutes><DoctorAppointments /></ProtectRoutes>} />
           <Route path="user-appointments" element={<ProtectRoutes><UserAppointment /></ProtectRoutes>} />
+          <Route path="doctor-dashboard" element={<ProtectRoutes><DoctorDashboard /></ProtectRoutes>} />
+          <Route path="admin-dashboard" element={<ProtectRoutes><AdminDashboard /></ProtectRoutes>} />
+          <Route path="patients" element={<ProtectRoutes><DoctorPatients /></ProtectRoutes>} />
         </Route>
 
       </Route>
@@ -55,6 +63,7 @@ const router = createBrowserRouter(
       <Route path="forgot-password" element={<PublicRoutes> <ForgotPassword /> </PublicRoutes>} />
       <Route path="/reset-password/:token" element={<PublicRoutes> <ResetPassword /> </PublicRoutes>} />
       <Route path="otpverify" element={<PublicRoutes> <OTPVerify />  </PublicRoutes>} />
+      <Route path="book-appointment" element={<ProtectRoutes> <BookAppointment />  </ProtectRoutes>} />
 
     </>
 

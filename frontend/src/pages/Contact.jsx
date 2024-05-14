@@ -1,6 +1,7 @@
 import React from 'react'
 import Subscribe from '../components/Subscribe'
 import Breadcum from '../components/Breadcum'
+import MessengerChat from '../components/MessengerChat'
 
 export default function Contact() {
   return (
@@ -10,14 +11,9 @@ export default function Contact() {
         <div className="container">
           <div className="row">
             <div className="col-md-8">
-              <h1>Contact</h1>
+              <h1 className='text-capitalize '>get in touch with us</h1>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
-                convallis libero in dui sollicitudin, id vestibulum arcu mattis.
-                Quisque non nunc nec nisl tincidunt tincidunt. Nullam nec
-                vestibulum nunc. Nulla facilisi. Duis nec semper libero. Nulla
-                facilisi. Duis nec semper libero. Nulla facilisi. Duis nec semper
-                libero.
+                We're open for any suggestion or just to have a chat
               </p>
               <form action="https://api.web3forms.com/submit" method="POST">
                 <input type="hidden" name="access_key" value={import.meta.env.VITE_WEB3FORM} />
@@ -67,7 +63,7 @@ export default function Contact() {
           </div>
         </div>
       </section>
-
+      <MessengerChat />
       <Subscribe />
     </>
   )

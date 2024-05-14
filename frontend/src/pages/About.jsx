@@ -1,7 +1,7 @@
 import React from 'react'
 import BookProcess from '../components/BookProcess'
 import Breadcum from '../components/Breadcum'
-// import BookProcess from '../components/BookProcess'
+
 
 export default function About() {
     return (

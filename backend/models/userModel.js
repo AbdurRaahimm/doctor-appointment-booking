@@ -24,7 +24,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         trim: true,
         required: [true, 'Please provide a phone number'],
-        unique: true,
         match: [/^\d{11}$/, 'Please provide a valid phone number']
     },
     gender:{
@@ -33,8 +32,14 @@ const userSchema = new mongoose.Schema({
         enum: ['male', 'female']
     },
     image: {
-        type: String,
-        required: [true, 'Please provide an image']
+        public_id: {
+            type: String,
+            required: true
+        },
+        url: {
+            type: String,
+            required: true
+        },
     },
     isDoctor: {
         type: Boolean,

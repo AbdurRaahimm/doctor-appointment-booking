@@ -27,6 +27,17 @@ const appointmentSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    symptoms: {
+        type: String,
+    },
+    image: {
+        public_id: {
+            type: String,
+        },
+        url: {
+            type: String,
+        },
+    },
     status: {
         type: String,
         required: true,

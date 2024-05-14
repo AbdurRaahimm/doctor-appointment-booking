@@ -6,7 +6,7 @@ import { getCookie } from '../utilis/getCookie';
 export default function ApplyDoctor() {
     const [loading, setLoading] = useState(false);
     const userById = useSelector(state => state.userById.userById);
-    console.log(userById.image);
+    // console.log(userById.image.url);
     const token = getCookie('token');
     const handleApplyDoctor = async (e) => {
         e.preventDefault();
@@ -34,7 +34,7 @@ export default function ApplyDoctor() {
                 credentials: 'include',
                 body: JSON.stringify({
                     userId: userById._id,
-                    image: userById.image,
+                    image: userById.image.url,
                     name: formData.get('name'),
                     email: formData.get('email'),
                     phone: formData.get('phone'),

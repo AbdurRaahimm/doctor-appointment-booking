@@ -30,8 +30,8 @@ export default function SingIn() {
                 toast(data.message);
                 localStorage.setItem('user', JSON.stringify(data.user));
                 // setCookie("token", data.user.Token, 30);
-                // navigate('/');
-                window.location.href = "/";
+                navigate('/dashboard');
+                // window.location.href = "/dashboard";
             } else {
                 toast.error(data.message);
                 setLoading(false)
