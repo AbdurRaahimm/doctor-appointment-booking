@@ -8,7 +8,7 @@ export default function FetchReviews({ review }) {
             <hr />
             <div className="d-flex gap-3 align-items-center  ">
                 <div className="user">
-                    <img width={50} height={50} className='rounded-circle ' src={`http://localhost:3000/${review.image}`} alt="User" />
+                    <img width={50} height={50} className='rounded-circle ' src={review.image} alt="User" />
                 </div>
                 <div className="">
                     <div className="rating">

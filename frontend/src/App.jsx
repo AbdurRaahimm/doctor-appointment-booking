@@ -44,7 +44,7 @@ const router = createBrowserRouter(
         
         <Route path="dashboard" element={<DashboardLayout />} errorElement={<ErrorPage />}>
           <Route index element={<ProtectRoutes> <Profile /></ProtectRoutes>} />
-          <Route path="doctor-profile" element={<ProtectRoutes> <DoctorInfo /></ProtectRoutes>} />
+          <Route  path="doctor-profile" element={<ProtectRoutes> <DoctorInfo /></ProtectRoutes>} />
           <Route path="user-list" element={<ProtectRoutes><UsersList /></ProtectRoutes>} />
           <Route path="doctor-list" element={<ProtectRoutes><DoctorsList /></ProtectRoutes>} />
           <Route path="apply-doctor" element={<ProtectRoutes><ApplyDoctor /></ProtectRoutes>} />
@@ -52,7 +52,7 @@ const router = createBrowserRouter(
           <Route path="doctor-appointments" element={<ProtectRoutes><DoctorAppointments /></ProtectRoutes>} />
           <Route path="user-appointments" element={<ProtectRoutes><UserAppointment /></ProtectRoutes>} />
           <Route path="doctor-dashboard" element={<ProtectRoutes><DoctorDashboard /></ProtectRoutes>} />
-          <Route path="admin-dashboard" element={<ProtectRoutes><AdminDashboard /></ProtectRoutes>} />
+          <Route  path="admin-dashboard" element={<ProtectRoutes><AdminDashboard /></ProtectRoutes>} />
           <Route path="patients" element={<ProtectRoutes><DoctorPatients /></ProtectRoutes>} />
         </Route>
 

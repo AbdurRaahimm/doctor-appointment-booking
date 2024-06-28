@@ -6,6 +6,7 @@ import { fetchApprovedDoctors } from '../redux/approvedDoctorsSlice';
 import useNotify from '../hooks/useNotify';
 
 export default function FindDoctor() {
+    const [filteredDoctors, setFilteredDoctors] = useState([])
     const { showNotification } = useNotify();
     const [state, setstate] = useState({
         username: '',
@@ -23,6 +24,7 @@ export default function FindDoctor() {
         dispatch(fetchApprovedDoctors())
         showNotification('Welcome', 'Find your desired doctor here!')
     }, []);
+
 
     return (
         <div className="py-3">
@@ -160,6 +162,20 @@ export default function FindDoctor() {
                         </aside>
                     </div>
                     <div className="col-lg-9 col-md-12">
+                        <div className="d-flex">
+                            <button className='btn btn-outline-danger me-2' onClick={ () => setstate(currentState => ({ ...currentState, specialist: '' }))
+                            }>All</button>
+                            {
+                                [...new Set(approvedDoctors.doctors.map(doctor => doctor.speciality))].map(specialist =>
+
+                                    <div key={specialist} className=''>
+
+                                        {/* button */}
+                                        <button onClick={() => setstate(currentState => ({ ...currentState, specialist: specialist }))} className='btn btn-outline-danger me-2'>{specialist}</button>
+                                    </div>
+                                )
+                            }
+                        </div>
                         <div className="container-fluid">
                             {/* sorted */}
                             <div className='py-2 d-flex justify-content-between gap-2'>
@@ -184,6 +200,7 @@ export default function FindDoctor() {
                                 </select>
                             </div>
                             <div className="row">
+
                                 {
                                     approvedDoctors.loading ? <h1>Loading...</h1> :
                                         approvedDoctors.error ? <h1>{approvedDoctors.error}</h1> :

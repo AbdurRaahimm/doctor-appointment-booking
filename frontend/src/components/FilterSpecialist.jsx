@@ -38,7 +38,7 @@ export default function FilterSpecialist() {
                 </div>
                 <div className="row">
                     {
-                        filteredDoctors.slice(0,7).map(doctor => (
+                        filteredDoctors.slice(0,6).map(doctor => (
                             <DoctorList key={doctor._id} doctor={doctor} />
                         ))
                     }

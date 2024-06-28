@@ -13,7 +13,8 @@ app.use(cors({
         "http://localhost:5173",
         "http://localhost:4173",
         "http://localhost:5174",
-        "http://localhost:5175",
+        // "https://zingy-tiramisu-12fe8d.netlify.app/",
+        "https://doctor-appointment-capstone.netlify.app/",
     ],
     credentials: true,
 }

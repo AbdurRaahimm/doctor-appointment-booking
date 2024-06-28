@@ -113,7 +113,6 @@ router.post('/forgot-password', async (req, res) => {
         if (!user) {
             throw new Error('User does not exist');
         }
-
         // Generate a token
         const Token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '30m' });
 

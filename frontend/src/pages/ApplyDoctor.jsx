@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { getCookie } from '../utilis/getCookie';
@@ -63,6 +63,13 @@ export default function ApplyDoctor() {
             toast.error('Server error');
         }
     };
+    useEffect(() => {
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => {
+                console.error(error);
+            });
+    }, [])
     return (
         <section>
             <div className="container my-3">
@@ -104,7 +111,7 @@ export default function ApplyDoctor() {
                                 <div className="col-md-12">
                                     <div className="form-group">
                                         <label htmlFor="about">Say about yourself</label>
-                                        <textarea name="about" className="form-control" id="about" required />
+                                        <textarea name="about" className="form-control" id="editor" required />
                                     </div>
                                 </div>
                                 <hr className='mt-4' />

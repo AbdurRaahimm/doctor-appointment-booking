@@ -11,6 +11,7 @@ export default function AddReviews() {
     const [defaultRating, setDefaultRating] = useState(1);
     const { id } = useParams();
     const user = JSON.parse(localStorage.getItem("user")) || [];
+    console.log(user)
     const dispatch = useDispatch();
     const token = getCookie("token")
 
@@ -36,7 +37,7 @@ export default function AddReviews() {
                     rating: defaultRating,
                     userId: user._id,
                     userName: user.username,
-                    image: user.image,
+                    image: user.image.url,
                 })
             })
             const data = await res.json();

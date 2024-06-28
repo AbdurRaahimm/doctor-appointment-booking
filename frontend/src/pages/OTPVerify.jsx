@@ -71,6 +71,7 @@ export default function OTPVerify() {
                 <div className="row  shadow" style={{ height: '35rem' }}>
                     <div className="col-lg-12 col-md-12 pb-2 text-center text-white rounded d-flex align-items-center justify-content-center flex-column " style={{ backgroundImage: 'linear-gradient(to right, #fc6076, #ff9a44)' }}>
                         <h1>OTP Verify</h1>
+                        <h3> Your OTP: {otp} </h3>
                         <p>Enter the OTP sent to your email</p>
                         <form onSubmit={handleVerify}>
                             <div className="mb-3 d-flex gap-2 w-25 mx-auto ">

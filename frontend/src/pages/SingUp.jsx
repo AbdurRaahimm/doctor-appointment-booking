@@ -31,9 +31,9 @@ export default function SingUp() {
     setData(formData)
     // send otp to email
     Email.send({
-      SecureToken: import.meta.env.VITE_SECURE_TOKEN,
+      SecureToken: "b47937fa-8219-4089-8c49-8726a30ca74e",
       To: form.email.value,
-      From: import.meta.env.VITE_FROM_EMAIL,
+      From: "sayeda7080@gmail.com",
       Subject: "OTP Verification",
       Body: `Your OTP is ${otp}`
     }).then(
@@ -46,12 +46,28 @@ export default function SingUp() {
     navigate('/otpverify')
   }
 
+  const emailSend = () => {
+    Email.send({
+      Host: "smtp.elasticemail.com",
+      Username: "sayeda7080@gmail.com",
+      Password: "0CB1AB2EB75FFB44CA3C7B39C9C7DD4E868E",
+      To: 'rasel@yopmail.com',
+      From: "sayeda7080@gmail.com",
+      Subject: "This is the subject",
+      Body: "And this is the body"
+    }).then(
+      message => alert(message)
+    );
+
+  }
+
   return (
     <section className="min-vh-100 pt-4 " style={{ backgroundImage: 'linear-gradient(to right, #25aae1, #40e495, #30dd8a, #2bb673)' }}  >
       <div className="container mx-auto ">
         <div className="row  shadow" style={{ height: '35rem' }}>
           <div className="col-lg-6 col-md-12 pb-2 text-center text-white rounded-start d-flex align-items-center justify-content-center flex-column " style={{ backgroundImage: 'linear-gradient(to right, #fc6076, #ff9a44)' }}>
-            <h1>Welcome</h1>
+            <h1>Welcome </h1>
+
             <p>Sign in and discover great amount of new opportunities!</p>
             <Link to="/signin" className="btn border border-white text-white ">Sign In </Link>
           </div>
@@ -109,6 +125,7 @@ export default function SingUp() {
                 <label htmlFor="images">Profile</label>
                 <input type="file" name='profile' className="form-control" id="images" required />
               </div>
+              {/* <button onClick={emailSend} >send</button> */}
 
               <button type="submit" className="btn w-100 text-white " style={{ backgroundImage: 'linear-gradient(to right, #fc6076, #ff9a44)' }}>
                 {loading ? <div className="spinner-border text-light" role="status">

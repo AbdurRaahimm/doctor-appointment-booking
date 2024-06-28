@@ -17,36 +17,13 @@ export default function NavBar() {
     let token = getCookie("token");
     // console.log(user.image)
 
-    const handleLogOut = async () => {
-        try {
-            const response = await fetch("http://localhost:3000/api/user/logout", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                credentials: "include",
-            });
-            const data = await response.json();
-            if (response.ok) {
-                localStorage.removeItem("user");
-                // navigate("/");
-                window.location.href = "/";
-                // alert(data.message);
-                toast.success(data.message);
-            } else {
-                toast.error(data.message);
-            }
-        }
-        catch (error) {
-            console.log(error.message)
-        }
-    };
+
     const searchHandle = (search) => {
         setSearch(search);
         const filterDoctor = approvedDoctors.filter((doctor) => {
             return doctor.name.toLowerCase().includes(search.toLowerCase());
         });
-        console.log(filterDoctor);
+        // console.log(filterDoctor);
         setDoctor(filterDoctor);
         if (search === "") {
             setDoctor([]);
@@ -54,27 +31,19 @@ export default function NavBar() {
     }
     return (
         <>
-            <nav className="navbar navbar-expand-lg navbar-light bg-white shadow sticky-top">
+            <nav className="navbar navbar-expand-lg navbar-light bg-white shadow">
                 <div className="container-fluid">
                     <Link className="navbar-brand" to="/">
-                        <img width={48} className=" " src="https:abdurraahimm.github.io/capstone/img/logo/logo.png" alt="logo" />
-                        <span className="fw-bold text-capitalize ">Dr. appointment</span>
+                        <img width={48} className=" " src="https://abdurraahimm.github.io/capstone/img/logo/logo.png" alt="logo" />
+                        <span className="fw-bold text-capitalize ">Dr.</span>
                     </Link>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
                     <div className="collapse navbar-collapse" id="navbarNav">
-                        {/* search bar with icon*/}
-                        <form className="d-flex ms-auto w-50 ">
-                            <i className="bi bi-search position-absolute  py-2 px-2 border-end"></i>
-                            <input type="search"
-                                onChange={(e) => searchHandle(
-                                    e.target.value,
-                                )}
-                                className="form-control ps-5 border-start " placeholder="Search Doctor..." />
-                        </form>
+                       
 
-                        <ul className="navbar-nav ms-auto" style={{ alignItems: "center" }}>
+                        <ul className="navbar-nav " style={{ alignItems: "center" }}>
                             {
                                 menus.map((menu, index) => (
                                     <li key={index} className="nav-item">
@@ -111,36 +80,23 @@ export default function NavBar() {
                         </ul>
 
                         {/* if token exist then show */}
-                        {token ? (
-                            <div className="mx-2 dropdown">
-                                <a href="#" className="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src={user.image.url} alt="" width="32" height="32" className="rounded-circle me-4" />
-                                    {/* <strong>^</strong> */}
-                                </a>
-                                <ul className="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-                                    {/* <li><a className="dropdown-item" href="#">New project...</a></li>
-                                <li><a className="dropdown-item" href="#">Settings</a></li> */}
-                                    <Link className="dropdown-item text-capitalize" to="dashboard">
-                                        <i className="bi bi-person-fill fs-5 "></i> dashboard
-                                    </Link>
-                                    <li><hr className="dropdown-divider" /></li>
-                                    <li >
-                                        <button onClick={handleLogOut} className="dropdown-item text-capitalize">
-                                            <i className="bi bi-box-arrow-right fs-5 "></i> Log out
-                                        </button>
-                                    </li>
-                                </ul>
-                            </div>
-
+                        {/* {token ? (
+                           
 
                         ) : (
-                            <div className="d-flex">
-                                {/* <Link className="btn btn-outline-primary" to="/login">Login</Link>
-                            <Link className="btn btn-danger ms-2" to="/register">Register</Link> */}
-                            </div>
-                        )}
+                           
+                        )} */}
 
                     </div>
+                     {/* search bar with icon*/}
+                     <form className="d-flex ms-auto w-50 ">
+                            <i className="bi bi-search position-absolute  py-2 px-2 border-end"></i>
+                            <input type="search"
+                                onChange={(e) => searchHandle(
+                                    e.target.value,
+                                )}
+                                className="form-control ps-5 border-start " placeholder="Search Doctor..." />
+                        </form>
                 </div>
             </nav>
             <div className="w-50 mx-auto bg-white shadow">

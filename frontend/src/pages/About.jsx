@@ -12,7 +12,7 @@ export default function About() {
                     <div className="row">
                         <div className="col-md-6">
                             <img className="w-75 "
-                                src="https://doctris-react-landing.vercel.app/static/media/about-2.4f696a42c208855604fb.png"
+                                src="https://doctris-landing.vercel.app/static/media/about-2.4f696a42c208855604fb.png"
                                 alt="" />
                         </div>
                         <div className="col-md-6 py-4">
@@ -140,13 +140,13 @@ export default function About() {
                                         <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                             data-bs-target="#flush-collapseOne" aria-expanded="false"
                                             aria-controls="flush-collapseOne">
-                                            Can i make an Appointment Online with White Plains Hospital Kendi?
+                                            Can I make an Appointment Online ?
                                         </button>
                                     </h2>
                                     <div id="flush-collapseOne" className="accordion-collapse collapse"
                                         aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                                         <div className="accordion-body">
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+                                           Search for a doctor, view their profile, and book an appointment. It’s that simple.
                                         </div>
                                     </div>
                                 </div>
@@ -155,13 +155,13 @@ export default function About() {
                                         <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                             data-bs-target="#flush-collapseTwo" aria-expanded="false"
                                             aria-controls="flush-collapseTwo">
-                                            Can i make an Appointment Online with White Plains Hospital Kendi?
+                                            What happens when I receive an order ?
                                         </button>
                                     </h2>
                                     <div id="flush-collapseTwo" className="accordion-collapse collapse"
                                         aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
                                         <div className="accordion-body">
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+                                            Order is placed and the doctor will confirm the appointment. You will receive a confirmation notifications.
                                         </div>
                                     </div>
                                 </div>
@@ -170,13 +170,14 @@ export default function About() {
                                         <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                             data-bs-target="#flush-collapseThree" aria-expanded="false"
                                             aria-controls="flush-collapseThree">
-                                            Can i make an Appointment Online with White Plains Hospital Kendi?
+                                            {/* question another*/}
+                                            Can I get a refund if I cancel my appointment ?
                                         </button>
                                     </h2>
                                     <div id="flush-collapseThree" className="accordion-collapse collapse"
                                         aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
                                         <div className="accordion-body">
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+                                          yes, you can cancel the appointment and get a refund. 
                                         </div>
                                     </div>
                                 </div>
@@ -185,13 +186,13 @@ export default function About() {
                                         <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                             data-bs-target="#flush-collapseFour" aria-expanded="false"
                                             aria-controls="flush-collapseFour">
-                                            Can i make an Appointment Online with White Plains Hospital Kendi?
+                                            Can I contact the doctor before the appointment ?
                                         </button>
                                     </h2>
                                     <div id="flush-collapseFour" className="accordion-collapse collapse"
                                         aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
                                         <div className="accordion-body">
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+                                            Yes, you can contact the doctor before the appointment.
                                         </div>
                                     </div>
                                 </div>
@@ -200,13 +201,13 @@ export default function About() {
                                         <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                             data-bs-target="#flush-collapseFive" aria-expanded="false"
                                             aria-controls="flush-collapseFive">
-                                            Can i make an Appointment Online with White Plains Hospital Kendi?
+                                            What is the process of getting an appointment ?
                                         </button>
                                     </h2>
                                     <div id="flush-collapseFive" className="accordion-collapse collapse"
                                         aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
                                         <div className="accordion-body">
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+                                            Search for a doctor, view their profile, and book an appointment. It’s that simple.
                                         </div>
                                     </div>
                                 </div>

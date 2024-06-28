@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 
 export const fetchApprovedDoctors  = createAsyncThunk("fetchApprovedDoctors", async () => {
-    const response = await fetch("http://localhost:3000/api/doctor/get-approved-doctors" , {
+    const response = await fetch("https://mocki.io/v1/ac1b7ffc-5f0a-4224-9553-d00bb342bd99" , {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
